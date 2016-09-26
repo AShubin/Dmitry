@@ -1,85 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <link rel="shortcut icon" href="img/favicon.png">
-
-    <title>FlatLab Frontend | Blog Details</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/theme.css" rel="stylesheet">
-    <link href="css/bootstrap-reset.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/flexslider.css"/>
-    <link href="assets/bxslider/jquery.bxslider.css" rel="stylesheet" />
-
-
-      <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-     <!--header start-->
-    <header class="header-frontend">
-        <div class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="fa fa-bar"></span>
-                        <span class="fa fa-bar"></span>
-                        <span class="fa fa-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">Flat<span>Lab</span></a>
-                </div>
-                <div class="navbar-collapse collapse ">
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="services.html">Service</a></li>
-                        <li class="dropdown ">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Feature <b class=" fa fa-angle-down"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="typography.html">Typography</a></li>
-                                <li><a href="button.html">Buttons</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="price.html">Price</a></li>
-                        <li class="active"><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li class="dropdown language">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img alt="" src="img/flags/us.png">
-                                <span class="username">US</span>
-                                <b class=" fa fa-angle-down"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><img alt="" src="img/flags/es.png"> Spanish</a></li>
-                                <li><a href="#"><img alt="" src="img/flags/de.png"> German</a></li>
-                                <li><a href="#"><img alt="" src="img/flags/ru.png"> Russian</a></li>
-                                <li><a href="#"><img alt="" src="img/flags/fr.png"> French</a></li>
-                            </ul>
-                        </li>
-                        <li><input type="text" placeholder=" Search" class="form-control search"></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!--header end-->
+<?php require_once "header.php"; ?>
 
     <!--breadcrumbs start-->
     <div class="breadcrumbs">
@@ -146,7 +65,7 @@
                             </div>
                         </div>
                         <div class="col-lg-10 col-sm-10">
-                            <h1><a href="blog_detail.html">Suspendisse dignissim in sem eget pulvinar. Mauris aliquam nulla at libero pretium.</a></h1>
+                            <h1><a href="blog_detail.php">Suspendisse dignissim in sem eget pulvinar. Mauris aliquam nulla at libero pretium.</a></h1>
                             <p>Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets.. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</p>
                             <blockquote>
                                 <p>
