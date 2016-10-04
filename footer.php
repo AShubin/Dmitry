@@ -1,15 +1,15 @@
+<?php // $configs = include('config.php'); ?>
 <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-3">
                 <h1> contact info </h1>
                 <address>
-                    <p> Address: No.28 - 63877 street </p>
-                    <p> lorem ipsum city, Country </p>
-
-                    <p> Phone : (123) 456 - 7890 </p>
-                    <p> Fax : (123) 456 - 7890 </p>
-                    <p> Email : <a href="javascript:;"> support@vectorlab . com </a></p>
+                    <p> <b>Address:</b> <?= $configs['address']; ?> </p>
+                    <p> <b>Phone:</b> <?php foreach($configs['phone'] as $key=>$value){
+                            echo $value; } ?> </p>
+                    <p> <b>Fax:</b> <?= $configs['fax']; ?> </p>
+                    <p> <b>Email:</b> <a href="javascript:;"> <?= $configs['email']; ?> </a></p>
                 </address>
             </div>
             <div class="col-lg-5 col-sm-5">
