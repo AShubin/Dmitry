@@ -1,9 +1,11 @@
 <?php
+var_dump($_POST);
+
 session_start();
 $admin='admin';
 $pass='a029d0df84eb5549c641e04a9ef389e5';
 
-if($_SESSION['admin']){
+if(isset($_SESSION['admin']) ){
     header("Location: admin.php");
     exit;
 }
@@ -20,11 +22,12 @@ if($_SESSION['admin']){
 </form>
 
 <?php
-if($_POST['submit']) {
+if( isset($_POST['submit']) ) {
 if($admin == $_POST['user'] AND $pass == md5($_POST['pass'])){
 $_SESSION['admin'] = $admin;
 header("Location: admin.php");
 exit;
-}else echo '<p>Логин или пароль неверны!</p>';
+}
+else echo "<p>Логин или пароль неверны!</p>";
 }
 ?>
