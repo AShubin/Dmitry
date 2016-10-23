@@ -1,8 +1,10 @@
-var Script = function () {
+var Script = function ($) {
+    if($.validator){
 
     $.validator.setDefaults({
         submitHandler: function() { alert("submitted!"); }
     });
+    }
 
     $().ready(function() {
         // validate the comment form when it is submitted
@@ -80,4 +82,4 @@ var Script = function () {
     });
 
 
-}();
+}(jQuery);

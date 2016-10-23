@@ -1,6 +1,9 @@
 /*---LEFT BAR ACCORDION----*/
-$(function() {
-    $('#nav-accordion').dcAccordion({
+
+
+
+jQuery(function() {
+    jQuery('#nav-accordion').dcAccordion({
         eventType: 'click',
         autoClose: true,
         saveState: true,
@@ -13,7 +16,7 @@ $(function() {
     });
 });
 
-var Script = function () {
+var Script = function ($) {
 
 //    sidebar dropdown menu auto scrolling
 
@@ -68,9 +71,9 @@ var Script = function () {
     });
 
 // custom scrollbar
-    $("#sidebar").niceScroll({styler:"fb",cursorcolor:"#e8403f", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled:false, cursorborder: ''});
+//    $("#sidebar").niceScroll({styler:"fb",cursorcolor:"#e8403f", cursorwidth: '3', cursorborderradius: '10px', background: '#404040', spacebarenabled:false, cursorborder: ''});
 
-    $("html").niceScroll({styler:"fb",cursorcolor:"#e8403f", cursorwidth: '6', cursorborderradius: '10px', background: '#404040', spacebarenabled:false,  cursorborder: '', zindex: '1000'});
+  //  $("html").niceScroll({styler:"fb",cursorcolor:"#e8403f", cursorwidth: '6', cursorborderradius: '10px', background: '#404040', spacebarenabled:false,  cursorborder: '', zindex: '1000'});
 
 // widget tools
 
@@ -113,4 +116,5 @@ var Script = function () {
     }
 
 
-}();
+
+}(jQuery);

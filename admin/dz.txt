@@ -1,0 +1,11 @@
+1) создать папки продукты
+2) в ней создаем файлы:
+- list.php - в этом файле показываем все записи таблицы (Advanced Table)
+mysql select * from ....
+
+- one.php - этот файл принимает параметр гет id и показывает запись с такии ид
+http://localhost/dmitry/admin/products/one.php?id=1
+
+- form.php - форма для создания и редактирования записи
+http://localhost/dmitry/admin/products/form.php - создание
+http://localhost/dmitry/admin/products/form.php?id=1 - редактирование записи бюе ид == 1

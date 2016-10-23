@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+const ADMIN_URL = 'http://localhost/dmitry/admin';
 function init()
 {
     if (!is_login() && $_SERVER['SCRIPT_NAME'] != '/dmitry/admin/login.php') {
@@ -10,6 +10,29 @@ function init()
     auth();
     if (isset($_GET['action']) && $_GET['action'] == 'logout') {
         logout();
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'add-user') {
+        if (isset ($_POST['name'])) {
+            $name = $_POST['name'];
+        }
+        if (isset ($_POST['password'])) {
+            $password = $_POST['password'];
+        }
+        if (isset ($_POST['confirm_password'])) {
+            $confirm_password = $_POST['confirm_password'];
+        }
+        if (isset ($_POST['email'])) {
+            $email = $_POST['email'];
+        }
+        if (isset ($_POST['role'])) {
+            $role = $_POST['role'];
+        }
+
+        if(create_admin($name, $email, $password, $confirm_password, $role)){
+
+        }else{
+
+        }
     }
 }
 
@@ -100,8 +123,8 @@ function get_user($login, $password)
     return (isset($result->num_rows) && $result->num_rows > 0) ? $result->fetch_assoc() : false;
 }
 
-function create_admin ($name, $email, $password) {
-    if (isset($name) && isset($email) && isset($password) && !empty($name) && !empty($email) && !empty($password)) {
+function create_admin ($name, $email, $password, $confirm_password, $role) {
+    if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name) && !empty($email) && !empty($password) && !empty($role) && $password==$confirm_password) {
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return false;
         }
@@ -112,7 +135,7 @@ function create_admin ($name, $email, $password) {
             return false;
         }
         $password=md5($password);
-        $insert="INSERT INTO users (name, role, email, password) VALUES ('$name','admin','$email','$password')";
+        $insert="INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
         return ($conn->query($insert) === TRUE)? true: false;
 
     }
