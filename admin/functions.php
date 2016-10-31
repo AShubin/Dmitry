@@ -148,6 +148,17 @@ function get_leads() {
     return $res;
 }
 
+function get_pages() {
+    $conn = get_connection();
+    $sql = "SELECT * FROM pages";
+    $result = $conn->query($sql);
+    $res = [];
+    while ($item = $result->fetch_assoc()){
+        $res[] = $item;
+    }
+    return $res;
+}
+
 //create session
 function login($login, $pass)
 {
