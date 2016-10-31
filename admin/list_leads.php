@@ -1,7 +1,7 @@
 <?php
 require_once "functions.php";
 init();
-$options = get_configs();
+$options = get_leads();
 require_once "header_admin.php";
 require_once "sidebar_admin.php";
 
@@ -20,9 +20,8 @@ require_once "sidebar_admin.php";
                         <thead>
                         <tr>
                             <th> id</th>
-                            <th> option_group</th>
-                            <th> name</th>
-                            <th> value</th>
+                            <th> email</th>
+                            <th> status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,9 +31,8 @@ require_once "sidebar_admin.php";
                             ?>
                             <tr>
                                 <td><a href="/opt_group/one.php?id=<?= $opt['id']; ?>"><?= $opt['id']; ?></a></td>
-                                <td class=""><?= $opt['option_group']; ?></td>
-                                <td class=""><?= $opt['name']; ?></td>
-                                <td class=""><?= $opt['value']; ?></td>
+                                <td class=""><?= $opt['email']; ?></td>
+                                <td class=""><?= $opt['status']; ?></td>
                             </tr>
                         <?php endforeach; ?>
 

@@ -137,6 +137,17 @@ function get_configs() {
     return $res;
     }
 
+function get_leads() {
+    $conn = get_connection();
+    $sql = "SELECT * FROM leads";
+    $result = $conn->query($sql);
+    $res = [];
+    while ($item = $result->fetch_assoc()){
+        $res[] = $item;
+    }
+    return $res;
+}
+
 //create session
 function login($login, $pass)
 {
