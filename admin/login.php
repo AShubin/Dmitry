@@ -3,7 +3,6 @@ require_once "functions.php";
 init();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +35,7 @@ init();
 
 <div class="container">
 
-    <form class="form-signin" method="POST">
+    <form class="form-signin" method="post">
         <h2 class="form-signin-heading">sign in now</h2>
         <div class="login-wrap">
             <?php if (isset($_SESSION["login_errors"])){
@@ -98,12 +97,9 @@ init();
 
 </div>
 
-
-
 <!-- js placed at the end of the document so the pages load faster -->
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
 
 </body>
 </html>

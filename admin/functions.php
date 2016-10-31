@@ -1,7 +1,7 @@
 <?php
-
 session_start();
 const ADMIN_URL = 'http://localhost/dmitry/admin';
+
 function init()
 {
     if (!is_login() && $_SERVER['SCRIPT_NAME'] != '/dmitry/admin/login.php') {
@@ -27,11 +27,12 @@ function init()
         if (isset ($_POST['role'])) {
             $role = $_POST['role'];
         }
+        create_admin($name, $email, $password, $confirm_password, $role);
 
-        if(create_admin($name, $email, $password, $confirm_password, $role)){
-
-        }else{
-
+        if (create_admin($name, $email, $password, $confirm_password, $role)) {
+            echo "User with $role rights was added.";
+        } else {
+            echo 'Please complete all fields.';
         }
     }
 }
@@ -41,47 +42,44 @@ function logout_link()
     return $_SERVER['SCRIPT_NAME'] . "?action=logout";
 }
 
+//create session
 function login($login, $pass)
 {
     if (isset($login) && isset($pass)) {
-
         $user = get_user($login, $pass);
         if ($user) {
             $_SESSION['admin'] = $user;
             return true;
         }
-
     }
     return false;
+}
 
-} //create session
-
+//check if user is logged in
 function is_login()
 {
     return (isset ($_SESSION ['admin']) && !empty($_SESSION ['admin'])) ? true : false;
-} //check if user is loged in
+}
 
+//redirect to login
 function redirect($url)
 {
     if ($_SERVER['SCRIPT_NAME'] == '/dmitry/admin/login.php' && $url == "/dmitry/admin/login.php") {
         return;
     }
-
     $url = (is_login()) ? $url : 'login.php';
     header("Location: $url");
     exit;
+}
 
-} //redirect to login
-
-
+//logout user
 function logout()
 {
     if ($_SESSION ['admin']) {
         unset($_SESSION ['admin']);
     }
-
     redirect("/dmitry/admin/login.php");
-} //logout user
+}
 
 function auth()
 {
@@ -98,15 +96,14 @@ function auth()
     }
 }
 
+// Create connection
 function get_connection()
 {
     $servername = "localhost";
     $username = "test_user";
     $password = "1111";
     $dbname = "database_test";
-// Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
-
 // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -119,13 +116,15 @@ function get_user($login, $password)
     $conn = get_connection();
     $sql = "SELECT * FROM users WHERE name='$login' AND password=MD5('$password')";
     $result = $conn->query($sql);
-
     return (isset($result->num_rows) && $result->num_rows > 0) ? $result->fetch_assoc() : false;
 }
 
-function create_admin ($name, $email, $password, $confirm_password, $role) {
-    if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name) && !empty($email) && !empty($password) && !empty($role) && $password==$confirm_password) {
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+function create_admin($name, $email, $password, $confirm_password, $role)
+{
+    if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name)
+        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password
+    ) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
         $conn = get_connection();
@@ -134,9 +133,8 @@ function create_admin ($name, $email, $password, $confirm_password, $role) {
         if (isset($result->num_rows) && $result->num_rows > 0) {
             return false;
         }
-        $password=md5($password);
-        $insert="INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
-        return ($conn->query($insert) === TRUE)? true: false;
-
+        $password = md5($password);
+        $insert = "INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
+        return ($conn->query($insert) === TRUE) ? true : false;
     }
 }
