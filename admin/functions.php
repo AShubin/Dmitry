@@ -18,6 +18,9 @@ function init()
         if (isset ($_POST['password'])) {
             $password = $_POST['password'];
         }
+
+
+
         if (isset ($_POST['confirm_password'])) {
             $confirm_password = $_POST['confirm_password'];
         }
@@ -27,13 +30,21 @@ function init()
         if (isset ($_POST['role'])) {
             $role = $_POST['role'];
         }
-        create_admin($name, $email, $password, $confirm_password, $role);
+        try{
+            $user_created = create_admin($name, $email, $password, $confirm_password, $role);
+            if ($user_created) {
+                echo "User with $role rights was added.";
+            } else {
+                echo 'Please complete all fields.';
+            }
 
-        if (create_admin($name, $email, $password, $confirm_password, $role)) {
-            echo "User with $role rights was added.";
-        } else {
-            echo 'Please complete all fields.';
+        }catch (Exception $e){
+            $_SESSION["user_add_errors"] = $e->getMessage();
         }
+
+
+
+
     }
 }
 
@@ -125,16 +136,23 @@ function create_admin($name, $email, $password, $confirm_password, $role)
         && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password
     ) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
+             throw new Exception('Not valid email');
         }
         $conn = get_connection();
         $sql = "SELECT * FROM users WHERE name='$name' OR email='$email'";
         $result = $conn->query($sql);
         if (isset($result->num_rows) && $result->num_rows > 0) {
-            return false;
+            throw new Exception('User already exist');
         }
         $password = md5($password);
         $insert = "INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
-        return ($conn->query($insert) === TRUE) ? true : false;
+        if($conn->query($insert) === TRUE){
+            return true;
+        }else{
+            throw new Exception('Error with inserting into database');
+        }
     }
+
+    throw new Exception('Arguments not correct');
+
 }

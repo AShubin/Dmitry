@@ -1,9 +1,4 @@
 <?php
-
-
-var_dump($_POST);
-
-
 require_once "functions.php";
 init();
 
@@ -26,8 +21,11 @@ require_once "sidebar_admin.php";
                     </header>
                     <div class="panel-body">
                         <div class="form">
-                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="post">
+                            <form class="cmxform form-horizontal tasi-form" method="post">
 
+                                <?php if (isset($_SESSION["user_add_errors"])){
+                                    echo '<p>'.$_SESSION["user_add_errors"].'</p>';
+                                }?>
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Username</label>
                                     <div class="col-lg-10">
