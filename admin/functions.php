@@ -33,18 +33,69 @@ function init()
         try{
             $user_created = create_admin($name, $email, $password, $confirm_password, $role);
             if ($user_created) {
-                echo "User with $role rights was added.";
+                $arr = [
+                    'message'=>"User with $role rights was added.",
+                    'type'=>'success'
+                ];
+
             } else {
-                echo 'Please complete all fields.';
+                $arr = [
+                    'message'=>'Please complete all fields.',
+                    'type'=>'error'
+                ];
+
             }
+            $_SESSION["user_add_message"] =  $arr;
 
         }catch (Exception $e){
-            $_SESSION["user_add_errors"] = $e->getMessage();
+            $arr = [
+                'message'=>$e->getMessage(),
+                'type'=>'error'
+            ];
+            $_SESSION["user_add_message"] =  $arr;
         }
 
 
 
 
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'add-option-group') {
+        try{
+            if (isset ($_POST['name'])) {
+               create_option_group($_POST['name']);
+            }else{
+                throw new Exception('Name is empty');
+            }
+        }catch (Exception $e){
+            $_SESSION["user_option_group"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'add-config') {
+        try{
+            if (isset ($_POST['name'])) {
+                create_option_group($_POST['name']);
+            }else{
+                throw new Exception('Name is empty');
+            }
+
+
+
+        }catch (Exception $e){
+            $_SESSION["user_option_group"] = $e->getMessage();
+        }
+    }
+}
+
+function create_group($name, $value,$option_group_id){
+    $conn = get_connection();
+
+    //add check if exist option_group_id in table
+
+    $insert = "INSERT INTO configs (name,value,option_group) VALUES ('$name','$value', $option_group_id)";
+    if($conn->query($insert) === TRUE){
+        return true;
+    }else{
+        throw new Exception('Error with inserting into database');
     }
 }
 
@@ -52,6 +103,39 @@ function logout_link()
 {
     return $_SERVER['SCRIPT_NAME'] . "?action=logout";
 }
+
+function create_option_group($name){
+    $conn = get_connection();
+
+    $insert = "INSERT INTO option_group (name,count) VALUES ('$name',0 )";
+    if($conn->query($insert) === TRUE){
+        return true;
+    }else{
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function get_conf_options(){
+    $conn = get_connection();
+    $sql = "SELECT * FROM option_group";
+    $result = $conn->query($sql);
+    $res = [];
+    while ($item = $result->fetch_assoc()){
+        $res[] = $item;
+    }
+    return $res;
+}
+
+function get_configs() {
+    $conn = get_connection();
+    $sql = "SELECT * FROM configs";
+    $result = $conn->query($sql);
+    $res = [];
+    while ($item = $result->fetch_assoc()){
+        $res[] = $item;
+    }
+    return $res;
+    }
 
 //create session
 function login($login, $pass)
@@ -122,10 +206,10 @@ function get_connection()
     return $conn;
 }
 
-function get_user($login, $password)
+function get_user($login, $password, $role='admin' )
 {
     $conn = get_connection();
-    $sql = "SELECT * FROM users WHERE name='$login' AND password=MD5('$password')";
+    $sql = "SELECT * FROM users WHERE  name='$login' AND password=MD5('$password') AND role='$role'";
     $result = $conn->query($sql);
     return (isset($result->num_rows) && $result->num_rows > 0) ? $result->fetch_assoc() : false;
 }
