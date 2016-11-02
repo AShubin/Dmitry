@@ -73,7 +73,7 @@ function init()
     }
 }
 
-function create_group($name, $value,$option_group_id){
+function create_group($name, $value, $option_group_id){
     $conn = get_connection();
 
     //add check if exist option_group_id in table
@@ -163,7 +163,8 @@ function auth()
             } else {
                 $_SESSION["login_errors"] = "Incorrect login or password";
             }
-        } else {
+        }
+        else {
             $_SESSION["login_errors"] = "Login or password is empty";
         }
     }

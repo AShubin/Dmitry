@@ -33,7 +33,7 @@ require_once "sidebar_admin.php";
                             <tr>
                                 <td><a href="/opt_group/one.php?id=<?= $opt['id']; ?>"><?= $opt['id']; ?></a></td>
                                 <td class=""><?= $opt['name']; ?></td>
-                                <td class="">Press <img src="assets/advanced-datatable/examples/examples_support/details_open.png"></td>
+                                <td class="">Press <img src="../../assets/advanced-datatable/examples/examples_support/details_open.png"></td>
                                 <td class=""><?= $opt['slug']; ?></td>
                             </tr>
                         </tbody>
@@ -51,15 +51,15 @@ require_once "sidebar_admin.php";
 
 <!--script for this page-->
 <!--<script src="js/jquery.js"></script>-->
-<script type="text/javascript" language="javascript" src="assets/advanced-datatable/media/js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="js/jquery.scrollTo.min.js"></script>
-<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="js/respond.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../assets/advanced-datatable/media/js/jquery.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="../../js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="../../js/jquery.scrollTo.min.js"></script>
+<script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="../../js/respond.min.js"></script>
 <script type="text/javascript" language="javascript"
-        src="assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
+        src="../../assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../assets/data-tables/DT_bootstrap.js"></script>
 
 
 <script type="text/javascript">
@@ -79,7 +79,7 @@ require_once "sidebar_admin.php";
          */
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
-        nCloneTd.innerHTML = '<img src="assets/advanced-datatable/examples/examples_support/details_open.png">';
+        nCloneTd.innerHTML = '<img src="../../assets/advanced-datatable/examples/examples_support/details_open.png">';
         nCloneTd.className = "center";
 
         $('#hidden-table-info thead tr').each(function () {

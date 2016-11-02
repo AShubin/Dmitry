@@ -14,7 +14,7 @@ require_once "sidebar_admin.php";
                 <section class="panel">
 
                     <header class="panel-heading">
-                        Adding new option group
+                        <b>Adding new option group</b>
                     </header>
                     <div class="panel-body">
                         <div class="form">
@@ -23,6 +23,7 @@ require_once "sidebar_admin.php";
                                 <?php if (isset($_SESSION["user_option_group"])){
                                     echo '<p>'.$_SESSION["user_option_group"].'</p>';
                                 }?>
+                                
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name</label>
                                     <div class="col-lg-10">
