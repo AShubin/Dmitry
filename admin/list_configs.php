@@ -1,7 +1,8 @@
 <?php
 require_once "functions.php";
 init();
-$options = get_configs();
+$options = get_rows('configs');
+
 require_once "header_admin.php";
 require_once "sidebar_admin.php";
 

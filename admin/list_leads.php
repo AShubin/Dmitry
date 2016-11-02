@@ -1,7 +1,7 @@
 <?php
 require_once "functions.php";
 init();
-$options = get_leads();
+$options = get_rows('leads');
 require_once "header_admin.php";
 require_once "sidebar_admin.php";
 

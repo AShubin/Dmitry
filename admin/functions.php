@@ -115,13 +115,15 @@ function create_option_group($name){
     }
 }
 
-function get_conf_options(){
-    $conn = get_connection();
-    $sql = "SELECT * FROM option_group";
-    $result = $conn->query($sql);
+function get_rows($name){
     $res = [];
-    while ($item = $result->fetch_assoc()){
+    if(isset($name) && !empty($name)){
+        $conn = get_connection();
+        $sql = "SELECT * FROM $name";
+        $result = $conn->query($sql);
+        while ($item = $result->fetch_assoc()){
         $res[] = $item;
+        }
     }
     return $res;
 }
