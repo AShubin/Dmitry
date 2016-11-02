@@ -1,16 +1,13 @@
 <?php
 require_once "functions.php";
 init();
-
 require_once "header_admin.php";
 require_once "sidebar_admin.php";
-
 ?>
 
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-
         <!-- page start-->
         <div class="row">
             <div class="col-lg-12">
@@ -65,7 +62,6 @@ require_once "sidebar_admin.php";
                                 </div>
 
                                 <input type="hidden" name="action" value="add-user">
-
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
                                         <button class="btn btn-danger" type="submit">Save</button>
@@ -86,7 +82,6 @@ require_once "sidebar_admin.php";
 <?php require_once "footer_admin.php"; ?>
 
 <!--script for this page-->
-
 
 </body>
 </html>

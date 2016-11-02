@@ -18,9 +18,6 @@ function init()
         if (isset ($_POST['password'])) {
             $password = $_POST['password'];
         }
-
-
-
         if (isset ($_POST['confirm_password'])) {
             $confirm_password = $_POST['confirm_password'];
         }
@@ -37,16 +34,13 @@ function init()
                     'message'=>"User with $role rights was added.",
                     'type'=>'success'
                 ];
-
             } else {
                 $arr = [
                     'message'=>'Please complete all fields.',
                     'type'=>'error'
                 ];
-
             }
             $_SESSION["user_add_message"] =  $arr;
-
         }catch (Exception $e){
             $arr = [
                 'message'=>$e->getMessage(),
@@ -54,10 +48,6 @@ function init()
             ];
             $_SESSION["user_add_message"] =  $arr;
         }
-
-
-
-
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-option-group') {
         try{
@@ -77,9 +67,6 @@ function init()
             }else{
                 throw new Exception('Name is empty');
             }
-
-
-
         }catch (Exception $e){
             $_SESSION["user_option_group"] = $e->getMessage();
         }
@@ -124,39 +111,6 @@ function get_rows($name){
         while ($item = $result->fetch_assoc()){
         $res[] = $item;
         }
-    }
-    return $res;
-}
-
-function get_configs() {
-    $conn = get_connection();
-    $sql = "SELECT * FROM configs";
-    $result = $conn->query($sql);
-    $res = [];
-    while ($item = $result->fetch_assoc()){
-        $res[] = $item;
-    }
-    return $res;
-    }
-
-function get_leads() {
-    $conn = get_connection();
-    $sql = "SELECT * FROM leads";
-    $result = $conn->query($sql);
-    $res = [];
-    while ($item = $result->fetch_assoc()){
-        $res[] = $item;
-    }
-    return $res;
-}
-
-function get_pages() {
-    $conn = get_connection();
-    $sql = "SELECT * FROM pages";
-    $result = $conn->query($sql);
-    $res = [];
-    while ($item = $result->fetch_assoc()){
-        $res[] = $item;
     }
     return $res;
 }

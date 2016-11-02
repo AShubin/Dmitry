@@ -1,7 +1,7 @@
 <?php
 require_once "functions.php";
 init();
-$options = get_pages();
+$options = get_rows('pages');
 require_once "header_admin.php";
 require_once "sidebar_admin.php";
 
@@ -13,7 +13,7 @@ require_once "sidebar_admin.php";
         <!-- page start-->
         <section class="panel">
             <header class="panel-heading">
-                Pages
+                <b>Pages</b>
             </header>
             <div class="panel-body">
                 <div class="adv-table">
@@ -25,7 +25,6 @@ require_once "sidebar_admin.php";
                             <th> name</th>
                             <th> content</th>
                             <th> slug</th>
-                            <!--                            <th>CSS grade</th>-->
                         </tr>
                         </thead>
                         <tbody>
