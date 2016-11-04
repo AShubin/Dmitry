@@ -1,9 +1,9 @@
 <?php
-require_once "functions.php";
+require_once "../../functions.php";
 init();
 $options = get_rows('products');
-require_once "header_admin.php";
-require_once "sidebar_admin.php";
+require_once "../../header_admin.php";
+require_once "../../sidebar_admin.php";
 ?>
 <!--main content start-->
 <section id="main-content">
@@ -52,7 +52,7 @@ require_once "sidebar_admin.php";
 </section>
 <!--main content end-->
 
-<?php require_once "footer_admin.php"; ?>
+<?php require_once "../../footer_admin.php"; ?>
 
 <!--script for this page-->
 

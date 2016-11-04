@@ -62,6 +62,17 @@ function init()
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-config') {
         try{
+            if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group'])) {
+                create_config($_POST['name'], $_POST['value'], $_POST['opt_group']);
+            }else{
+                throw new Exception('Name is empty');
+            }
+        }catch (Exception $e){
+            $_SESSION["user_option_group"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'add-leads') {
+        try{
             if (isset ($_POST['name'])) {
                 create_option_group($_POST['name']);
             }else{
@@ -73,12 +84,23 @@ function init()
     }
 }
 
-function create_group($name, $value, $option_group_id){
+//function create_group($name, $value, $option_group_id){
+//    $conn = get_connection();
+//
+//    //add check if exist option_group_id in table
+//
+//    $insert = "INSERT INTO configs (name,value,option_group) VALUES ('$name','$value', $option_group_id)";
+//    if($conn->query($insert) === TRUE){
+//        return true;
+//    }else{
+//        throw new Exception('Error with inserting into database');
+//    }
+//}
+
+function create_option_group($name){
     $conn = get_connection();
 
-    //add check if exist option_group_id in table
-
-    $insert = "INSERT INTO configs (name,value,option_group) VALUES ('$name','$value', $option_group_id)";
+    $insert = "INSERT INTO option_group (name,count) VALUES ('$name',0 )";
     if($conn->query($insert) === TRUE){
         return true;
     }else{
@@ -86,15 +108,10 @@ function create_group($name, $value, $option_group_id){
     }
 }
 
-function logout_link()
-{
-    return $_SERVER['SCRIPT_NAME'] . "?action=logout";
-}
-
-function create_option_group($name){
+function create_config($name, $value, $opt_group){
     $conn = get_connection();
 
-    $insert = "INSERT INTO option_group (name,count) VALUES ('$name',0 )";
+    $insert = "INSERT INTO configs (name, value, option_group) VALUES ('$name', $value, $opt_group)";
     if($conn->query($insert) === TRUE){
         return true;
     }else{
@@ -217,5 +234,9 @@ function create_admin($name, $email, $password, $confirm_password, $role)
     }
 
     throw new Exception('Arguments not correct');
+}
 
+function logout_link()
+{
+    return $_SERVER['SCRIPT_NAME'] . "?action=logout";
 }

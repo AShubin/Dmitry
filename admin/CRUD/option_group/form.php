@@ -1,8 +1,8 @@
 <?php
-require_once "functions.php";
+require_once "../../functions.php";
 init();
-require_once "header_admin.php";
-require_once "sidebar_admin.php";
+require_once "../../header_admin.php";
+require_once "../../sidebar_admin.php";
 ?>
 
 <!--main content start-->
@@ -23,7 +23,7 @@ require_once "sidebar_admin.php";
                                 <?php if (isset($_SESSION["user_option_group"])){
                                     echo '<p>'.$_SESSION["user_option_group"].'</p>';
                                 }?>
-                                
+
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name</label>
                                     <div class="col-lg-10">
@@ -49,7 +49,7 @@ require_once "sidebar_admin.php";
 </section>
 <!--main content end-->
 
-<?php require_once "footer_admin.php"; ?>
+<?php require_once "../../footer_admin.php"; ?>
 
 <!--script for this page-->
 
