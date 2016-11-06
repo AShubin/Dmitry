@@ -119,11 +119,20 @@ function create_config($name, $value, $opt_group){
     }
 }
 
-function get_rows($name){
+function get_rows($name,$page=1,$per_page=20){
     $res = [];
     if(isset($name) && !empty($name)){
         $conn = get_connection();
-        $sql = "SELECT * FROM $name";
+        $sql = "SELECT * FROM $name ";
+        $_SESSION[$name.'_page']=$page;
+        $_SESSION[$name.'_per_page']=$per_page;
+        if ($page==1) {
+            $sql.="LIMIT $per_page";
+        }
+        else {
+            $offset=($page-1)*$per_page;
+            $sql.="LIMIT $per_page OFFSET $offset";
+        }
         $result = $conn->query($sql);
         while ($item = $result->fetch_assoc()){
         $res[] = $item;
@@ -131,6 +140,56 @@ function get_rows($name){
     }
     return $res;
 }
+
+function get_pagination($name) {
+    $res = [];
+    if(isset($name) && !empty($name)){
+        $conn = get_connection();
+        $sql = "SELECT count(*) as 'total' FROM $name";
+        $result = $conn->query($sql);
+        // $name.'_page'
+        // $name.'_per_page'
+        $res['total']= $result->fetch_assoc()['total'];
+        $page=$_SESSION[$name.'_page'];
+        $per_page=$_SESSION[$name.'_per_page'];
+        $res['page']= $page;
+        $res['per_page']= $per_page;
+        $res['min_number']=(($page-1)*$per_page)+1;
+        $max=$page*$per_page;
+        $res['max_number']=($max<$res['total'])?$max:$res['total'];
+        $res['number_pages']= ceil($res['total']/$per_page);
+       /* $item = $result->fetch_row();
+        $res['total'] = $item[0];*/
+    }
+    return $res;
+}
+
+function get_one ($name,int $id) {
+    $res = false;
+    if(isset($name) && !empty($name) && isset($id) && is_int($id)){
+        $conn = get_connection();
+        $sql = "SELECT * FROM $name WHERE id=$id";
+        $result = $conn->query($sql);
+        while ($item = $result->fetch_assoc()){
+            $res = $item;
+        }
+    }
+    return $res;
+}
+
+function create_link ($page) {
+    $url=$_SERVER['SCRIPT_NAME'];
+    if ($page>1) {
+        $url.='?page='.$page;
+    }
+    return $url;
+}
+
+function admin_link ($page) {
+    return ADMIN_URL.$page;
+}
+
+
 
 //create session
 function login($login, $pass)
