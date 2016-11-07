@@ -1,10 +1,10 @@
 <?php
 require_once "../../functions.php";
 init();
-$id=(isset($_GET['id']))?$_GET['id']:false;
-$options = get_one('configs',$id);
-if ($options==false) {
-redirect (ADMIN_URL.'/crud/configs/list.php');
+$id = (isset($_GET['id'])) ? $_GET['id'] : false;
+$options = get_one('configs', $id);
+if ($options == false) {
+    redirect(ADMIN_URL . '/crud/configs/list.php');
 }
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
@@ -19,13 +19,12 @@ require_once "../../sidebar_admin.php";
                         <b>Configs</b>
                     </header>
                     <table>
-<?php foreach ($options as $key=>$value) {
-    echo " <tr><td>$key</td><td>$value</td></tr>";
-}
-
-?>
-                        </table>
-
+                        <?php
+                        foreach ($options as $key => $value) {
+                            echo " <tr><td>$key</td><td>$value</td></tr>";
+                        }
+                        ?>
+                    </table>
                 </section>
             </div>
         </div>

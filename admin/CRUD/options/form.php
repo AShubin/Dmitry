@@ -30,7 +30,6 @@ require_once "../../sidebar_admin.php";
                                         <input required class="form-control" id="name" name="name" type="text">
                                     </div>
                                 </div>
-
                                 <input type="hidden" name="action" value="add-option-group">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">

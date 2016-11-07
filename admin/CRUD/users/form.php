@@ -20,9 +20,11 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["user_add_message"])){
-                                    echo '<p class="'.(($_SESSION["user_add_message"]['type'] == 'error')? 'error':'success').'" >'.$_SESSION["user_add_message"]['message'].'</p>';
-                                }?>
+                                <?php if (isset($_SESSION["user_add_message"])) {
+                                    echo '<p class="' . (($_SESSION["user_add_message"]['type'] == 'error') ? 'error' : 'success') . '" >' . $_SESSION["user_add_message"]['message'] . '</p>';
+                                }
+                                ?>
+
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Username</label>
                                     <div class="col-lg-10">
@@ -50,7 +52,6 @@ require_once "../../sidebar_admin.php";
                                         <input required class="form-control" id="email" name="email" type="email">
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="role" class="control-label col-lg-2">Role</label>
                                     <div class="col-lg-10">
@@ -60,7 +61,6 @@ require_once "../../sidebar_admin.php";
                                         </select>
                                     </div>
                                 </div>
-
                                 <input type="hidden" name="action" value="add-user">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">

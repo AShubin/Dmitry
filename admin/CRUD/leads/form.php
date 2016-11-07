@@ -1,7 +1,7 @@
 <?php
 require_once "../../functions.php";
 init();
-$options = get_rows('configs');
+$options = get_rows('leads');
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
 ?>
@@ -14,7 +14,7 @@ require_once "../../sidebar_admin.php";
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <b>Adding new config</b>
+                        <b>Adding new lead</b>
                     </header>
                     <div class="panel-body">
                         <div class="form">
@@ -25,27 +25,27 @@ require_once "../../sidebar_admin.php";
                                 }?>
 
                                 <div class="form-group ">
-                                    <label for="name" class="control-label col-lg-2">Name</label>
+                                    <label for="name" class="control-label col-lg-2">Email</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="name" name="name" type="text">
+                                        <input required class="form-control" id="email" name="email" type="text">
                                     </div>
                                 </div>
+<!--                                <div class="form-group ">-->
+<!--                                    <label for="value" class="control-label col-lg-2">Value</label>-->
+<!--                                    <div class="col-lg-10">-->
+<!--                                        <input required class="form-control" id="value" name="value"-->
+<!--                                               type="text">-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group ">
-                                    <label for="value" class="control-label col-lg-2">Value</label>
+                                    <label for="opt_group" class="control-label col-lg-2">Status</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="value" name="value"
-                                               type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="opt_group" class="control-label col-lg-2">Option group</label>
-                                    <div class="col-lg-10">
-                                        <select name="opt_group" id="opt_group" class="form-control">
+                                        <select name="status" id="status" class="form-control">
 
                                             <?php
                                             $html = '';
                                             foreach($options as $option){
-                                                $html .= "<option value='".$option['id']."'>".$option['name']."</option>";
+                                                $html .= "<option value='".$option['id']."'>".$option['status']."</option>";
                                             }
                                             echo $html;
                                             ?>
@@ -54,7 +54,7 @@ require_once "../../sidebar_admin.php";
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="action" value="add-config">
+                                <input type="hidden" name="action" value="add-lead">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
                                         <button class="btn btn-danger" type="submit">Save</button>

@@ -65,18 +65,18 @@ function init()
             if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group'])) {
                 create_config($_POST['name'], $_POST['value'], $_POST['opt_group']);
             }else{
-                throw new Exception('Name is empty');
+                throw new Exception('Fill in all lines');
             }
         }catch (Exception $e){
             $_SESSION["user_option_group"] = $e->getMessage();
         }
     }
-    if (isset($_POST['action']) && $_POST['action'] == 'add-leads') {
+    if (isset($_POST['action']) && $_POST['action'] == 'add-lead') {
         try{
-            if (isset ($_POST['name'])) {
-                create_option_group($_POST['name']);
+            if (isset ($_POST['email']) && isset($_POST['status'])) {
+                create_lead($_POST['email'], $_POST['status']);
             }else{
-                throw new Exception('Name is empty');
+                throw new Exception('Email is empty');
             }
         }catch (Exception $e){
             $_SESSION["user_option_group"] = $e->getMessage();
@@ -97,6 +97,31 @@ function init()
 //    }
 //}
 
+function create_admin($name, $email, $password, $confirm_password, $role)
+{
+    if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name)
+        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password
+    ) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception('Not valid email');
+        }
+        $conn = get_connection();
+        $sql = "SELECT * FROM users WHERE name='$name' OR email='$email'";
+        $result = $conn->query($sql);
+        if (isset($result->num_rows) && $result->num_rows > 0) {
+            throw new Exception('User already exist');
+        }
+        $password = md5($password);
+        $insert = "INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
+        if($conn->query($insert) === TRUE){
+            return true;
+        }else{
+            throw new Exception('Error with inserting into database');
+        }
+    }
+    throw new Exception('Arguments not correct');
+}
+
 function create_option_group($name){
     $conn = get_connection();
 
@@ -111,7 +136,18 @@ function create_option_group($name){
 function create_config($name, $value, $opt_group){
     $conn = get_connection();
 
-    $insert = "INSERT INTO configs (name, value, option_group) VALUES ('$name', $value, $opt_group)";
+    $insert = "INSERT INTO configs (name, value, option_group) VALUES ('$name', '$value', '$opt_group')";
+    if($conn->query($insert) === TRUE){
+        return true;
+    }else{
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function create_lead($email, $status){
+    $conn = get_connection();
+
+    $insert = "INSERT INTO leads (email, status) VALUES ('$email', '$status')";
     if($conn->query($insert) === TRUE){
         return true;
     }else{
@@ -189,8 +225,6 @@ function admin_link ($page) {
     return ADMIN_URL.$page;
 }
 
-
-
 //create session
 function login($login, $pass)
 {
@@ -267,32 +301,6 @@ function get_user($login, $password, $role='admin' )
     $sql = "SELECT * FROM users WHERE  name='$login' AND password=MD5('$password') AND role='$role'";
     $result = $conn->query($sql);
     return (isset($result->num_rows) && $result->num_rows > 0) ? $result->fetch_assoc() : false;
-}
-
-function create_admin($name, $email, $password, $confirm_password, $role)
-{
-    if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name)
-        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password
-    ) {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-             throw new Exception('Not valid email');
-        }
-        $conn = get_connection();
-        $sql = "SELECT * FROM users WHERE name='$name' OR email='$email'";
-        $result = $conn->query($sql);
-        if (isset($result->num_rows) && $result->num_rows > 0) {
-            throw new Exception('User already exist');
-        }
-        $password = md5($password);
-        $insert = "INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
-        if($conn->query($insert) === TRUE){
-            return true;
-        }else{
-            throw new Exception('Error with inserting into database');
-        }
-    }
-
-    throw new Exception('Arguments not correct');
 }
 
 function logout_link()
