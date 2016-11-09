@@ -20,8 +20,8 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["user_add_message"])){
-                                    echo '<p class="'.(($_SESSION["config_add_message"]['type'] == 'error')? 'error':'success').'" >'.$_SESSION["config_add_message"]['message'].'</p>';
+                                <?php if (isset($_SESSION["adding_config"])){
+                                    echo '<p>'.$_SESSION["adding_config"].'</p>';
                                 }?>
 
                                 <div class="form-group ">

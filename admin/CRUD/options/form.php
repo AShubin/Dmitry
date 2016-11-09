@@ -20,8 +20,8 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["user_option_group"])){
-                                    echo '<p>'.$_SESSION["user_option_group"].'</p>';
+                                <?php if (isset($_SESSION["adding_option_group"])){
+                                    echo '<p>'.$_SESSION["adding_option_group"].'</p>';
                                 }?>
 
                                 <div class="form-group ">

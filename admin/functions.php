@@ -57,7 +57,7 @@ function init()
                 throw new Exception('Name is empty');
             }
         }catch (Exception $e){
-            $_SESSION["user_option_group"] = $e->getMessage();
+            $_SESSION["adding_option_group"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-config') {
@@ -68,7 +68,7 @@ function init()
                 throw new Exception('Fill in all lines');
             }
         }catch (Exception $e){
-            $_SESSION["user_option_group"] = $e->getMessage();
+            $_SESSION["adding_config"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-lead') {
@@ -79,7 +79,7 @@ function init()
                 throw new Exception('Email is empty');
             }
         }catch (Exception $e){
-            $_SESSION["user_option_group"] = $e->getMessage();
+            $_SESSION["adding_lead"] = $e->getMessage();
         }
     }
 }
