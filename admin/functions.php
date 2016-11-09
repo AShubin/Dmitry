@@ -82,6 +82,17 @@ function init()
             $_SESSION["adding_lead"] = $e->getMessage();
         }
     }
+    if (isset($_POST['action']) && $_POST['action'] == 'add-page') {
+        try{
+            if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status'])) {
+                create_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status']);
+            }else{
+                throw new Exception('Fill in all lines');
+            }
+        }catch (Exception $e){
+            $_SESSION["adding_page"] = $e->getMessage();
+        }
+    }
 }
 
 //function create_group($name, $value, $option_group_id){
@@ -146,11 +157,20 @@ function create_config($name, $value, $opt_group){
 
 function create_lead($email, $status){
     $conn = get_connection();
-
     $insert = "INSERT INTO leads (email, status) VALUES ('$email', '$status')";
     if($conn->query($insert) === TRUE){
         return true;
     }else{
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function create_page ($name, $content, $slug, $status) {
+    $conn = get_connection();
+    $insert = "INSERT INTO pages (name, content, slug, status) VALUES ('$name', '$content', '$slug', '$status')";
+    if($conn->query($insert) === TRUE){
+        return true;
+    }else {
         throw new Exception('Error with inserting into database');
     }
 }

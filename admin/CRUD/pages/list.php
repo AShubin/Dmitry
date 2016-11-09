@@ -28,17 +28,20 @@ require_once "../../sidebar_admin.php";
                         </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            foreach ($options as $opt): ?>
-                            <tr>
-                                <td><a href="/opt_group/one.php?id=<?= $opt['id']; ?>"><?= $opt['id']; ?></a></td>
-                                <td class=""><?= $opt['name']; ?></td>
-                                <td class="">Press <img src="../../assets/advanced-datatable/examples/examples_support/details_open.png"></td>
-                                <td class=""><?= $opt['slug']; ?></td>
-                            </tr>
+                        <?php
+                        foreach ($options as $opt):
+                        ?>
+                        <tr>
+                            <td><a href="/opt_group/one.php?id=<?= $opt['id']; ?>"><?= $opt['id']; ?></a></td>
+                            <td class=""><?= $opt['name']; ?></td>
+                            <td class="">Press <img
+                                    src="../../assets/advanced-datatable/examples/examples_support/details_open.png">
+                            </td>
+                            <td class=""><?= $opt['slug']; ?></td>
+                        </tr>
                         </tbody>
                     </table>
-
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
@@ -60,10 +63,6 @@ require_once "../../sidebar_admin.php";
 <script type="text/javascript" language="javascript"
         src="../../assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../../assets/data-tables/DT_bootstrap.js"></script>
-
-
-
-<?php endforeach; ?>
 
 </body>
 </html>

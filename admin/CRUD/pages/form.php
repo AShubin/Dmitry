@@ -1,7 +1,7 @@
 <?php
 require_once "../../functions.php";
 init();
-$options = get_rows('leads');
+$options = get_rows('pages');
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
 ?>
@@ -20,16 +20,29 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["adding_lead"])){
-                                    echo '<p>'.$_SESSION["adding_lead"].'</p>';
+                                <?php if (isset($_SESSION["adding_page"])){
+                                    echo '<p>'.$_SESSION["adding_page"].'</p>';
                                 }?>
 
                                 <div class="form-group ">
-                                    <label for="name" class="control-label col-lg-2">Email</label>
+                                    <label for="name" class="control-label col-lg-2">Name of page</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="email" name="email" type="text">
+                                        <input required class="form-control" id="name" name="name" type="text">
                                     </div>
                                 </div>
+                                <div class="form-group ">
+                                    <label for="value" class="control-label col-lg-2">Content</label>
+                                    <div class="col-lg-10">
+                                        <input required class="form-control" id="content" name="content" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="value" class="control-label col-lg-2">Slug</label>
+                                    <div class="col-lg-10">
+                                        <input required class="form-control" id="slug" name="slug" type="text">
+                                    </div>
+                                </div>
+
                                 <div class="form-group ">
                                     <label for="opt_group" class="control-label col-lg-2">Status</label>
                                     <div class="col-lg-10">
@@ -47,7 +60,7 @@ require_once "../../sidebar_admin.php";
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="action" value="add-lead">
+                                <input type="hidden" name="action" value="add-page">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
                                         <button class="btn btn-danger" type="submit">Save</button>
