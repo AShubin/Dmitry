@@ -2,9 +2,9 @@
 require_once "../../functions.php";
 init();
 $id = (isset($_GET['id'])) ? $_GET['id'] : false;
-$options = get_one('configs', $id);
+$options = get_one('option_group', $id);
 if ($options == false) {
-    redirect(ADMIN_URL . '/crud/configs/list.php');
+    redirect(ADMIN_URL . '/crud/options/list.php');
 }
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
@@ -16,7 +16,7 @@ require_once "../../sidebar_admin.php";
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <b>Config</b>
+                        <b>Option</b>
                     </header>
                     <table>
                         <?php
