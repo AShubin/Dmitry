@@ -10,7 +10,6 @@ require_once "../../sidebar_admin.php";
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
@@ -77,7 +76,6 @@ require_once "../../sidebar_admin.php";
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
         </div>
