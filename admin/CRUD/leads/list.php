@@ -2,7 +2,7 @@
 require_once "../../functions.php";
 init();
 $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
-$options = get_rows('leads');
+$options = get_rows('leads', $page);
 $pag = get_pagination('leads');
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
