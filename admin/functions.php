@@ -27,70 +27,81 @@ function init()
         if (isset ($_POST['role'])) {
             $role = $_POST['role'];
         }
-        try{
+        try {
             $user_created = create_admin($name, $email, $password, $confirm_password, $role);
             if ($user_created) {
                 $arr = [
-                    'message'=>"User with $role rights was added.",
-                    'type'=>'success'
+                    'message' => "User with $role rights was added.",
+                    'type' => 'success'
                 ];
             } else {
                 $arr = [
-                    'message'=>'Please complete all fields.',
-                    'type'=>'error'
+                    'message' => 'Please complete all fields.',
+                    'type' => 'error'
                 ];
             }
-            $_SESSION["user_add_message"] =  $arr;
-        }catch (Exception $e){
+            $_SESSION["user_add_message"] = $arr;
+        } catch (Exception $e) {
             $arr = [
-                'message'=>$e->getMessage(),
-                'type'=>'error'
+                'message' => $e->getMessage(),
+                'type' => 'error'
             ];
-            $_SESSION["user_add_message"] =  $arr;
+            $_SESSION["user_add_message"] = $arr;
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-option-group') {
-        try{
+        try {
             if (isset ($_POST['name'])) {
-               create_option_group($_POST['name']);
-            }else{
+                create_option_group($_POST['name']);
+            } else {
                 throw new Exception('Name is empty');
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $_SESSION["adding_option_group"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-config') {
-        try{
+        try {
             if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group'])) {
                 create_config($_POST['name'], $_POST['value'], $_POST['opt_group']);
-            }else{
+            } else {
                 throw new Exception('Fill in all lines');
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $_SESSION["adding_config"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-lead') {
-        try{
+        try {
             if (isset ($_POST['email']) && isset($_POST['status'])) {
                 create_lead($_POST['email'], $_POST['status']);
-            }else{
+            } else {
                 throw new Exception('Email is empty');
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $_SESSION["adding_lead"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-page') {
-        try{
+        try {
             if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status'])) {
                 create_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status']);
-            }else{
+            } else {
                 throw new Exception('Fill in all lines');
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $_SESSION["adding_page"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'add-product') {
+        try {
+            if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status']) && isset($_POST['price']) && isset($_POST['currency'])) {
+                create_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'], $_POST['price'], $_POST['currency']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_product"] = $e->getMessage();
         }
     }
 }
@@ -124,125 +135,158 @@ function create_admin($name, $email, $password, $confirm_password, $role)
         }
         $password = md5($password);
         $insert = "INSERT INTO users (name, role, email, password) VALUES ('$name','$role','$email','$password')";
-        if($conn->query($insert) === TRUE){
+        if ($conn->query($insert) === TRUE) {
             return true;
-        }else{
+        } else {
             throw new Exception('Error with inserting into database');
         }
     }
     throw new Exception('Arguments not correct');
 }
 
-function create_option_group($name){
+function create_option_group($name)
+{
     $conn = get_connection();
 
     $insert = "INSERT INTO option_group (name,count) VALUES ('$name',0 )";
-    if($conn->query($insert) === TRUE){
+    if ($conn->query($insert) === TRUE) {
         return true;
-    }else{
+    } else {
         throw new Exception('Error with inserting into database');
     }
 }
 
-function create_config($name, $value, $opt_group){
+function create_config($name, $value, $opt_group)
+{
     $conn = get_connection();
 
     $insert = "INSERT INTO configs (name, value, option_group) VALUES ('$name', '$value', '$opt_group')";
-    if($conn->query($insert) === TRUE){
+    if ($conn->query($insert) === TRUE) {
         return true;
-    }else{
+    } else {
         throw new Exception('Error with inserting into database');
     }
 }
 
-function create_lead($email, $status){
+function create_lead($email, $status)
+{
     $conn = get_connection();
     $insert = "INSERT INTO leads (email, status) VALUES ('$email', '$status')";
-    if($conn->query($insert) === TRUE){
+    if ($conn->query($insert) === TRUE) {
         return true;
-    }else{
+    } else {
         throw new Exception('Error with inserting into database');
     }
 }
 
-function create_page ($name, $content, $slug, $status) {
+function create_page($name, $content, $slug, $status)
+{
     $conn = get_connection();
-    $insert = "INSERT INTO pages (name, content, slug, status) VALUES ('$name', '$content', '$slug', '$status')";
-    if($conn->query($insert) === TRUE){
+    $insert = "INSERT INTO pages (name, content, slug, status) VALUES ('$name','$content','$slug','$status')";
+    if ($conn->query($insert) === TRUE) {
         return true;
-    }else {
+    } else {
         throw new Exception('Error with inserting into database');
     }
 }
 
-function get_rows($name,$page=1,$per_page=20){
+function create_product($name, $content, $slug, $status, $price, $currency)
+{
+    $conn = get_connection();
+    $insert = "INSERT INTO products (name, content, slug, status,price,currency) VALUES ('$name','$content','$slug','$status','$price','$currency')";
+    if ($conn->query($insert) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function get_rows($name, $page = 1, $per_page = 20)
+{
     $res = [];
-    if(isset($name) && !empty($name)){
+    if (isset($name) && !empty($name)) {
         $conn = get_connection();
         $sql = "SELECT * FROM $name ";
-        $_SESSION[$name.'_page']=$page;
-        $_SESSION[$name.'_per_page']=$per_page;
-        if ($page==1) {
-            $sql.="LIMIT $per_page";
-        }
-        else {
-            $offset=($page-1)*$per_page;
-            $sql.="LIMIT $per_page OFFSET $offset";
+        $_SESSION[$name . '_page'] = $page;
+        $_SESSION[$name . '_per_page'] = $per_page;
+        if ($page == 1) {
+            $sql .= "LIMIT $per_page";
+        } else {
+            $offset = ($page - 1) * $per_page;
+            $sql .= "LIMIT $per_page OFFSET $offset";
         }
         $result = $conn->query($sql);
-        while ($item = $result->fetch_assoc()){
-        $res[] = $item;
+        while ($item = $result->fetch_assoc()) {
+            $res[] = $item;
         }
     }
     return $res;
 }
 
-function get_pagination($name) {
+//SHOW COLUMNS FROM `products` LIKE 'currency'
+
+function get_enum($table_name, $column_name)
+{
+    $enum = [];
+    $conn = get_connection();
+    $sql = "SHOW COLUMNS FROM `" . $table_name . "` LIKE '" . $column_name . "'";
+    $result = $conn->query($sql);
+    while ($item = $result->fetch_assoc()) {
+        $enum[] = $item;
+    }
+    return $enum;
+}
+
+function get_pagination($name)
+{
     $res = [];
-    if(isset($name) && !empty($name)){
+    if (isset($name) && !empty($name)) {
         $conn = get_connection();
         $sql = "SELECT count(*) as 'total' FROM $name";
         $result = $conn->query($sql);
         // $name.'_page'
         // $name.'_per_page'
-        $res['total']= $result->fetch_assoc()['total'];
-        $page=$_SESSION[$name.'_page'];
-        $per_page=$_SESSION[$name.'_per_page'];
-        $res['page']= $page;
-        $res['per_page']= $per_page;
-        $res['min_number']=(($page-1)*$per_page)+1;
-        $max=$page*$per_page;
-        $res['max_number']=($max<$res['total'])?$max:$res['total'];
-        $res['number_pages']= ceil($res['total']/$per_page);
-       /* $item = $result->fetch_row();
-        $res['total'] = $item[0];*/
+        $res['total'] = $result->fetch_assoc()['total'];
+        $page = $_SESSION[$name . '_page'];
+        $per_page = $_SESSION[$name . '_per_page'];
+        $res['page'] = $page;
+        $res['per_page'] = $per_page;
+        $res['min_number'] = (($page - 1) * $per_page) + 1;
+        $max = $page * $per_page;
+        $res['max_number'] = ($max < $res['total']) ? $max : $res['total'];
+        $res['number_pages'] = ceil($res['total'] / $per_page);
+        /* $item = $result->fetch_row();
+         $res['total'] = $item[0];*/
     }
     return $res;
 }
 
-function get_one ($name,int $id) {
+function get_one($name, int $id)
+{
     $res = false;
-    if(isset($name) && !empty($name) && isset($id) && is_int($id)){
+    if (isset($name) && !empty($name) && isset($id) && is_int($id)) {
         $conn = get_connection();
         $sql = "SELECT * FROM $name WHERE id=$id";
         $result = $conn->query($sql);
-        while ($item = $result->fetch_assoc()){
+        while ($item = $result->fetch_assoc()) {
             $res = $item;
         }
     }
     return $res;
 }
 
-function create_link ($page) {
-    $url=$_SERVER['SCRIPT_NAME'];
-    if ($page>1) {
-        $url.='?page='.$page;
+function create_link($page)
+{
+    $url = $_SERVER['SCRIPT_NAME'];
+    if ($page > 1) {
+        $url .= '?page=' . $page;
     }
     return $url;
 }
 
-function admin_link ($page) {
-    return ADMIN_URL.$page;
+function admin_link($page)
+{
+    return ADMIN_URL . $page;
 }
 
 //create session
@@ -293,8 +337,7 @@ function auth()
             } else {
                 $_SESSION["login_errors"] = "Incorrect login or password";
             }
-        }
-        else {
+        } else {
             $_SESSION["login_errors"] = "Login or password is empty";
         }
     }
@@ -315,7 +358,7 @@ function get_connection()
     return $conn;
 }
 
-function get_user($login, $password, $role='admin' )
+function get_user($login, $password, $role = 'admin')
 {
     $conn = get_connection();
     $sql = "SELECT * FROM users WHERE  name='$login' AND password=MD5('$password') AND role='$role'";
