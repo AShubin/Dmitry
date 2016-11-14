@@ -227,12 +227,18 @@ function get_rows($name, $page = 1, $per_page = 20)
 
 function get_enum($table_name, $column_name)
 {
-    $enum = [];
+    $enum = false;
     $conn = get_connection();
     $sql = "SHOW COLUMNS FROM `" . $table_name . "` LIKE '" . $column_name . "'";
     $result = $conn->query($sql);
     while ($item = $result->fetch_assoc()) {
-        $enum[] = $item;
+        $enum = $item['Type'];
+    }
+    if($enum){
+        preg_match("/\(\'(.*)\'\)/",$enum,$math);
+        if(isset($math[1])){
+            $enum = explode('\',\'',$math[1]);
+        }
     }
     return $enum;
 }
@@ -261,7 +267,7 @@ function get_pagination($name)
     return $res;
 }
 
-function get_one($name, int $id)
+function get_one($name,   $id)
 {
     $res = false;
     if (isset($name) && !empty($name) && isset($id) && is_int($id)) {
@@ -347,9 +353,9 @@ function auth()
 function get_connection()
 {
     $servername = "localhost";
-    $username = "test_user";
-    $password = "1111";
-    $dbname = "database_test";
+    $username = "root";
+    $password = "";
+    $dbname = "dmitry";
     $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
     if ($conn->connect_error) {

@@ -48,11 +48,12 @@ require_once "../../sidebar_admin.php";
                                         <select name="status" id="status" class="form-control">
 
                                             <?php
-                                            $html = '';
-                                            foreach ($options as $option) {
-                                                $html .= "<option value='" . $option['id'] . "'>" . $option['status'] . "</option>";
-                                            }
-                                            echo $html;
+                                                $html = '';
+                                                $options= get_enum('products', 'status');
+                                                foreach ($options as $option) {
+                                                    $html .= "<option value='" . $option . "'>" . $option . "</option>";
+                                                }
+                                                echo $html;
                                             ?>
 
                                         </select>
@@ -70,10 +71,10 @@ require_once "../../sidebar_admin.php";
                                         <select type="enum" name="currency" id="currency" class="form-control">
 
                                             <?php
-                                            $array=get_enum('products', 'currency');
+                                            $array= get_enum('products', 'currency');
                                             $html = '';
                                             foreach ($array as $option) {
-                                                $html .= "<option value='" . $option['currency'] . "'>" . $option['enum()'] . "</option>";
+                                                $html .= "<option value='" . $option . "'>" . $option . "</option>";
                                             }
                                             echo $html;
                                             ?>
