@@ -2,10 +2,68 @@
 2) в ней создаем файлы:
 - list.php - в этом файле показываем все записи таблицы (Advanced Table)
 mysql select * from ....
-
 - one.php - этот файл принимает параметр гет id и показывает запись с такии ид
 http://localhost/dmitry/admin/products/one.php?id=1
-
 - form.php - форма для создания и редактирования записи
 http://localhost/dmitry/admin/products/form.php - создание
 http://localhost/dmitry/admin/products/form.php?id=1 - редактирование записи бюе ид == 1
+
+
+
+Новое:
+- продумать как организовать указание доступов к бд для двоих людей с разными названиями бд и пользователями
+смысл в чем у тебя будут 2 конфига
+1 пусть будет base.php второй local.php
+2 local.php всегда перетирает значения base.php
+3 local.php исключен из индекса гита и добавлен в гитигнор
+4 сделать шаблон local.SAMPLE.php и добавить его в гит в нем все поля пустые только
+видна какая должна быть структура конфига
+смысл в чем, когда другой дев будет подымать сайт ему не прийдеться каждый раз перетирать
+твои конфиги и у вас с ним не будет конфликтов
+
+
+
+- для каждой формы если есть в гете ид, загружаем эту сущность(например конфиг) по ид с базы и подставляем
+ данные в форму. при сабмите такой формы делаем не инсерт а апдейт записи.
+
+http://www.codingcage.com/2014/12/simple-php-crud-operations-with-mysql.html
+
+сделать кнопку для делита записи
+примерно как в статье
+в ините тебе нужно будет проверять если есть get['action']==delete , model == "название таблицы" и id == 'ид поста'
+то выполняем запрос "delete from $table_name where id=$id"
+
+id записываешь в скрытый инпут,
+у нас есть скрытое поле экшен, вот в него если есть ид записываем например "update-page" если "create-page"
+а в ините просто выполняешь новую функцию
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-option-group') {
+        try{
+            if (isset ($_POST['name'])) {
+               create_option_group($_POST['name']);
+            }else{
+                throw new Exception('Name is empty');
+            }
+        }catch (Exception $e){
+            $_SESSION["adding_option_group"] = $e->getMessage();
+        }
+    }
+
+if (isset($_POST['action']) && $_POST['action'] == 'update-option-group') {
+        try{
+            if (isset ($_POST['name'] && isset($_POST['id']))) {
+               update_option_group(isset($_POST['id'],$_POST['name']);
+            }else{
+                throw new Exception('Name is empty');
+            }
+        }catch (Exception $e){
+            $_SESSION["update_option_group"] = $e->getMessage();
+        }
+    }
+
+если нету ид выводишь кнопку create иначе update
+ты делаешь проверку если есть ид загужаешь эту запись в переменную
+потом на каждом инпуте ты делаешь что то типа
+<input name='field' value="<?=( isset($id) && isset($item['field']) )? $item['field']: ' ' ?>">
+$item это переменная с записью
+те если нет ид в валуе инпута запишеться просто пустота, а если есть то значение поля базы данных

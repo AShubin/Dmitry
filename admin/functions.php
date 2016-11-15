@@ -350,12 +350,8 @@ function auth()
 }
 
 // Create connection
-function get_connection()
+function get_connection($servername, $username, $password, $dbname)
 {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "dmitry";
     $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
     if ($conn->connect_error) {
