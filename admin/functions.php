@@ -1,6 +1,14 @@
 <?php
 session_start();
 const ADMIN_URL = 'http://localhost/dmitry/admin';
+const ADMIN_PATH = __DIR__;
+if (!file_exists(ADMIN_PATH.'/local.php')) {
+    die('You did not have file local.php');
+}
+$local=require_once (ADMIN_PATH.'/local.php');
+$base=require_once (ADMIN_PATH.'/base.php');
+$config=array_merge($base, $local);
+
 
 function init()
 {
@@ -349,15 +357,20 @@ function auth()
     }
 }
 
-// Create connection
-function get_connection($servername, $username, $password, $dbname)
+function get_connection() // Create connection
 {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    global $config;
+    $host = $config['db']['host'];
+    $user_name = $config['db']['user'];
+    $pass = $config['db']['password'];
+    $db_name = $config['db']['db_name'];
+    $conn = new mysqli($host, $user_name, $pass, $db_name);
+    if (isset($host) && isset($user_name) && isset($pass) && isset($db_name)) {
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        return $conn;
     }
-    return $conn;
 }
 
 function get_user($login, $password, $role = 'admin')

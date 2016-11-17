@@ -3,6 +3,8 @@ require_once "../../functions.php";
 init();
 $id = (isset($_GET['id'])) ? $_GET['id'] : false;
 $options = get_one('option_group', $id);
+//var_dump($options);
+//die();
 if ($options == false) {
     redirect(ADMIN_URL . '/crud/options/list.php');
 }

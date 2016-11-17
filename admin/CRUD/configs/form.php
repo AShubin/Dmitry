@@ -1,7 +1,20 @@
 <?php
 require_once "../../functions.php";
 init();
+$id = (isset($_GET['id'])) ? $_GET['id'] : false;
+$data_set=get_one('configs', $_GET['id']);
 $options = get_rows('configs');
+if ($data_set == false) {
+    $name='';
+    $value='';
+    $option_group='';
+}
+else {
+    $name=$data_set['name'];
+    $value=$data_set['value'];
+    $option_group=$data_set['option_group'];
+}
+
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
 ?>
@@ -27,7 +40,8 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="name" name="name" type="text">
+                                        <input required class="form-control" id="name" name="name" type="text"
+                                               value="<?= $name ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
