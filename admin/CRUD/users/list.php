@@ -31,7 +31,7 @@ require_once "../../sidebar_admin.php";
                         foreach ($options as $opt):?>
 
                             <tr>
-                                <td><a href="/opt_group/one.php?id=<?= $opt['id']; ?>"><?= $opt['id']; ?></a></td>
+                                <td><a href="<?= admin_link('/crud/users/one.php?id=' . $opt['id']) ?>"><?= $opt['id']; ?></a></td>
                                 <td class=""><?= $opt['role']; ?></td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['email']; ?></td>

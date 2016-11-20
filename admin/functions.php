@@ -275,10 +275,10 @@ function get_pagination($name)
     return $res;
 }
 
-function get_one($name,   $id)
+function get_one($name, $id)
 {
     $res = false;
-    if (isset($name) && !empty($name) && isset($id) && is_int($id)) {
+    if (isset($name) && !empty($name) && isset($id) ) {
         $conn = get_connection();
         $sql = "SELECT * FROM $name WHERE id=$id";
         $result = $conn->query($sql);

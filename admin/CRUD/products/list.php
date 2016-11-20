@@ -34,7 +34,9 @@ require_once "../../sidebar_admin.php";
                         foreach ($options as $opt):
                             ?>
                             <tr>
-                                <td><a href="/opt_group/one.php?id=<?= $opt['id']; ?>"><?= $opt['id']; ?></a></td>
+                                <td>
+                                    <a href="<?= admin_link('/crud/products/one.php?id=' . $opt['id']) ?>"><?= $opt['id']; ?></a>
+                                </td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['content']; ?></td>
                                 <td class=""><?= $opt['status']; ?></td>

@@ -5,6 +5,7 @@ $id = (isset($_GET['id'])) ? $_GET['id'] : false;
 $options = get_one('users', $id);
 if ($options == false) {
     redirect(ADMIN_URL . '/crud/users/list.php');
+
 }
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
