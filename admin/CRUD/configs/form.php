@@ -1,9 +1,9 @@
 <?php
 require_once "../../functions.php";
 init();
-$id = (isset($_GET['id'])) ? $_GET['id'] : false;
-$data_set=get_one('configs', $_GET['id']);
-$options = get_rows('configs');
+$id=(isset($_GET['id'])) ? $_GET['id'] : false;
+$data_set=(isset($_GET['id'])) ? get_one('configs', $_GET['id']) : false;
+$options=get_rows('configs');
 if ($data_set == false) {
     $name='';
     $value='';
@@ -47,24 +47,15 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="value" class="control-label col-lg-2">Value</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="value" name="value"
-                                               type="text">
+                                        <input required class="form-control" id="value" name="value" type="text"
+                                               value="<?= $value ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <label for="opt_group" class="control-label col-lg-2">Option group</label>
                                     <div class="col-lg-10">
-                                        <select name="opt_group" id="opt_group" class="form-control">
-
-                                            <?php
-                                            $html = '';
-                                            foreach($options as $option){
-                                                $html .= "<option value='".$option['id']."'>".$option['name']."</option>";
-                                            }
-                                            echo $html;
-                                            ?>
-
-                                        </select>
+                                        <input required class="form-control" id="opt_group" name="opt_group" type="text"
+                                               value="<?= $option_group ?>">
                                     </div>
                                 </div>
 
