@@ -4,16 +4,10 @@ init();
 $id=(isset($_GET['id'])) ? $_GET['id'] : false;
 $data_set=(isset($_GET['id'])) ? get_one('configs', $_GET['id']) : false;
 $options=get_rows('configs');
-if ($data_set == false) {
-    $name='';
-    $value='';
-    $option_group='';
-}
-else {
-    $name=$data_set['name'];
-    $value=$data_set['value'];
-    $option_group=$data_set['option_group'];
-}
+
+$name=($data_set == false) ? '' : $data_set['name'];
+$value=($data_set == false) ? '' : $data_set['value'];
+$option_group=($data_set == false) ? '' : $data_set['option_group'];
 
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
@@ -59,10 +53,12 @@ require_once "../../sidebar_admin.php";
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="action" value="add-config">
+<!--                                <input type="hidden" name="action" value="add-config">-->
+                                <input type="hidden" name="action" value="<?= isset($_GET['id'])? 'update-config' : 'add-config'?>">
+                                <input type="hidden" name="id" value="<?= isset($_GET['id'])? $_GET['id'] : ''?>">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger" type="submit">Save</button>
+                                        <button class="btn btn-danger" type="submit"><?= isset($_GET['id'])? 'Update' : 'Save'?></button>
                                         <button class="btn btn-default" type="button">Cancel</button>
                                     </div>
                                 </div>

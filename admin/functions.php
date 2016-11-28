@@ -2,13 +2,12 @@
 session_start();
 const ADMIN_URL = 'http://localhost/dmitry/admin';
 const ADMIN_PATH = __DIR__;
-if (!file_exists(ADMIN_PATH.'/local.php')) {
+if (!file_exists(ADMIN_PATH . '/local.php')) {
     die('You did not have file local.php');
 }
-$local=require_once (ADMIN_PATH.'/local.php');
-$base=require_once (ADMIN_PATH.'/base.php');
-$config=array_merge($base, $local);
-
+$local = require_once(ADMIN_PATH . '/local.php');
+$base = require_once(ADMIN_PATH . '/base.php');
+$config = array_merge($base, $local);
 
 function init()
 {
@@ -112,6 +111,18 @@ function init()
             $_SESSION["adding_product"] = $e->getMessage();
         }
     }
+    if (isset($_POST['action']) && $_POST['action'] == 'update-config') {
+        try {
+            if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group']) && isset($_POST['id'])) {
+                update_config($_POST['name'], $_POST['value'], $_POST['opt_group'], $_POST['id']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_config"] = $e->getMessage();
+        }
+    }
+
 }
 
 //function create_group($name, $value, $option_group_id){
@@ -167,7 +178,6 @@ function create_option_group($name)
 function create_config($name, $value, $opt_group)
 {
     $conn = get_connection();
-
     $insert = "INSERT INTO configs (name, value, option_group) VALUES ('$name', '$value', '$opt_group')";
     if ($conn->query($insert) === TRUE) {
         return true;
@@ -209,6 +219,17 @@ function create_product($name, $content, $slug, $status, $price, $currency)
     }
 }
 
+function update_config($name, $value, $opt_group, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE configs SET name='$name',value='$value',option_group='$opt_group' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
 function get_rows($name, $page = 1, $per_page = 20)
 {
     $res = [];
@@ -242,10 +263,10 @@ function get_enum($table_name, $column_name)
     while ($item = $result->fetch_assoc()) {
         $enum = $item['Type'];
     }
-    if($enum){
-        preg_match("/\(\'(.*)\'\)/",$enum,$math);
-        if(isset($math[1])){
-            $enum = explode('\',\'',$math[1]);
+    if ($enum) {
+        preg_match("/\(\'(.*)\'\)/", $enum, $math);
+        if (isset($math[1])) {
+            $enum = explode('\',\'', $math[1]);
         }
     }
     return $enum;
@@ -278,7 +299,7 @@ function get_pagination($name)
 function get_one($name, $id)
 {
     $res = false;
-    if (isset($name) && !empty($name) && isset($id) ) {
+    if (isset($name) && !empty($name) && isset($id)) {
         $conn = get_connection();
         $sql = "SELECT * FROM $name WHERE id=$id";
         $result = $conn->query($sql);

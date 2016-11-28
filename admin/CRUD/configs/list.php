@@ -23,8 +23,8 @@ require_once "../../sidebar_admin.php";
                             <th> option_group</th>
                             <th> name</th>
                             <th> value</th>
-                            <th> update</th>
-                            <th> delete</th>
+                            <th> </th>
+                            <th> </th>
                         </tr>
                         </thead>
                         <tbody>
