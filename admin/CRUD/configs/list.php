@@ -23,13 +23,14 @@ require_once "../../sidebar_admin.php";
                             <th> option_group</th>
                             <th> name</th>
                             <th> value</th>
+                            <th> update</th>
+                            <th> delete</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        <?php
-                        foreach ($options as $opt):
-                            ?>
+                        <?php foreach ($options as $opt): ?>
+
                             <tr>
                                 <td>
                                     <a href="<?= admin_link('/crud/configs/one.php?id=' . $opt['id']) ?>"><?= $opt['id']; ?></a>
@@ -37,6 +38,12 @@ require_once "../../sidebar_admin.php";
                                 <td class=""><?= $opt['option_group']; ?></td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['value']; ?></td>
+                                <td>
+                                    <a class="btn btn-default" href="<?= admin_link('/crud/configs/form.php?id=' . $opt['id']) ?>">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" href="<? ?>">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
 
