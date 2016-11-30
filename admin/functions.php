@@ -122,6 +122,9 @@ function init()
             $_SESSION["adding_config"] = $e->getMessage();
         }
     }
+    if (isset($_GET['delete_id'])) {
+        delete($_GET['name'], $_GET['delete_id']);
+    }
 
 }
 
@@ -224,6 +227,17 @@ function update_config($name, $value, $opt_group, $id)
     $conn = get_connection();
     $update = "UPDATE configs SET name='$name',value='$value',option_group='$opt_group' WHERE id=$id";
     if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function delete ($name, $id)
+{
+    $conn = get_connection();
+    $delete = "DELETE FROM $name WHERE id=$id";
+    if ($conn->query($delete) === TRUE) {
         return true;
     } else {
         throw new Exception('Error with inserting into database');
