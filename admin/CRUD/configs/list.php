@@ -42,7 +42,7 @@ require_once "../../sidebar_admin.php";
                                     <a class="btn btn-default" href="<?= admin_link('/crud/configs/form.php?id=' .$opt['id']) ?>">Update</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-danger" href="<?= admin_link('/crud/configs/form.php?delete_id=' .$opt['id'] .'&name=configs') ?>">Delete</a>
+                                    <a class="btn btn-danger" href="<?= admin_link('/crud/configs/list.php?delete_id=' .$opt['id'] .'&name=configs') ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
