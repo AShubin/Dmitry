@@ -23,8 +23,8 @@ require_once "../../sidebar_admin.php";
                             <th> option_group</th>
                             <th> name</th>
                             <th> value</th>
-                            <th> </th>
-                            <th> </th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,16 +33,19 @@ require_once "../../sidebar_admin.php";
 
                             <tr>
                                 <td>
-                                    <a href="<?= admin_link('/crud/configs/one.php?id=' . $opt['id']) ?>"><?= $opt['id']; ?></a>
+                                    <a href="<?= admin_link('/crud/configs/one.php?id=' . $opt['id']) ?>">
+                                        <?= $opt['id']; ?></a>
                                 </td>
                                 <td class=""><?= $opt['option_group']; ?></td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['value']; ?></td>
                                 <td>
-                                    <a class="btn btn-default" href="<?= admin_link('/crud/configs/form.php?id=' .$opt['id']) ?>">Update</a>
+                                    <a class="btn btn-default"
+                                       href="<?= admin_link('/crud/configs/form.php?id=' . $opt['id']) ?>">Update</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-danger" href="<?= admin_link('/crud/configs/list.php?delete_id=' .$opt['id'] .'&name=configs') ?>">Delete</a>
+                                    <a class="btn btn-danger"
+                                       href="<?= admin_link('/crud/configs/list.php?delete_id=' . $opt['id'] . '&name=configs') ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -80,7 +83,8 @@ require_once "../../sidebar_admin.php";
                                     }
 
                                     foreach ($range as $number) {
-                                        echo '<li ' . (($pag['page'] == $number) ? 'class="active"' : '') . '><a href="' . create_link($number) . '">' . $number . '</a></li>';
+                                        echo '<li ' . (($pag['page'] == $number) ? 'class="active"' : '') . '>
+                                        <a href="' . create_link($number) . '">' . $number . '</a></li>';
                                     } ?>
 
                                     <?php if ($pag['page'] < $pag['number_pages']): ?>

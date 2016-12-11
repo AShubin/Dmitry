@@ -1,7 +1,11 @@
 <?php
 require_once "../../functions.php";
 init();
+$id=(isset($_GET['id'])) ? $_GET['id'] : false;
+$data_set=(isset($_GET['id'])) ? get_one('leads', $_GET['id']) : false;
 $options = get_rows('leads');
+$email=($data_set == false) ? '' : $data_set['email'];
+//$status=($data_set == false) ? '' : $data_set['status'];
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
 ?>
@@ -27,7 +31,8 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Email</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="email" name="email" type="text">
+                                        <input required class="form-control" id="email" name="email" type="text"
+                                               value="<?= $email ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -35,10 +40,19 @@ require_once "../../sidebar_admin.php";
                                     <div class="col-lg-10">
                                         <select name="status" id="status" class="form-control">
 
+<!--                                            --><?php
+//                                            $html = '';
+//                                            foreach($options as $option){
+//                                                $html .= "<option value='".$option['id']."'>".$option['status']."</option>";
+//                                            }
+//                                            echo $html;
+//                                            ?>
+
                                             <?php
+                                            $array= get_enum('leads', 'status');
                                             $html = '';
-                                            foreach($options as $option){
-                                                $html .= "<option value='".$option['id']."'>".$option['status']."</option>";
+                                            foreach ($array as $option) {
+                                                $html .= "<option value='" . $option . "'>" . $option . "</option>";
                                             }
                                             echo $html;
                                             ?>
@@ -46,11 +60,11 @@ require_once "../../sidebar_admin.php";
                                         </select>
                                     </div>
                                 </div>
-
-                                <input type="hidden" name="action" value="add-lead">
+                                <input type="hidden" name="action" value="<?= isset($_GET['id'])? 'update-lead' : 'add-lead'?>">
+                                <input type="hidden" name="id" value="<?= isset($_GET['id'])? $_GET['id'] : ''?>">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger" type="submit">Save</button>
+                                        <button class="btn btn-danger" type="submit"><?= isset($_GET['id'])? 'Update' : 'Save'?></button>
                                         <button class="btn btn-default" type="button">Cancel</button>
                                     </div>
                                 </div>

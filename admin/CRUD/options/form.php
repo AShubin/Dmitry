@@ -1,6 +1,10 @@
 <?php
 require_once "../../functions.php";
 init();
+$id=(isset($_GET['id'])) ? $_GET['id'] : false;
+$data_set=(isset($_GET['id'])) ? get_one('option_group', $_GET['id']) : false;
+$options=get_rows('option_group');
+$name=($data_set == false) ? '' : $data_set['name'];
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
 ?>
@@ -27,13 +31,15 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="name" name="name" type="text">
+                                        <input required class="form-control" id="name" name="name" type="text"
+                                               value="<?= $name ?>">
                                     </div>
                                 </div>
-                                <input type="hidden" name="action" value="add-option-group">
+                                <input type="hidden" name="action" value="<?= isset($_GET['id'])? 'update-option-group' : 'add-option-group'?>">
+                                <input type="hidden" name="id" value="<?= isset($_GET['id'])? $_GET['id'] : ''?>">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger" type="submit">Save</button>
+                                        <button class="btn btn-danger" type="submit"><?= isset($_GET['id'])? 'Update' : 'Save'?></button>
                                         <button class="btn btn-default" type="button">Cancel</button>
                                     </div>
                                 </div>

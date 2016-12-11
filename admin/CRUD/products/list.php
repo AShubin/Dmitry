@@ -26,6 +26,8 @@ require_once "../../sidebar_admin.php";
                             <th> slug</th>
                             <th> price</th>
                             <th> currency</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,6 +45,14 @@ require_once "../../sidebar_admin.php";
                                 <td class=""><?= $opt['slug']; ?></td>
                                 <td class=""><?= $opt['price']; ?></td>
                                 <td class=""><?= $opt['currency']; ?></td>
+                                <td>
+                                    <a class="btn btn-default"
+                                       href="<?= admin_link('/crud/products/form.php?id=' . $opt['id']) ?>">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                       href="<?= admin_link('/crud/products/list.php?delete_id=' . $opt['id'] . '&name=products') ?>">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
 

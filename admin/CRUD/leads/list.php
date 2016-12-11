@@ -22,6 +22,8 @@ require_once "../../sidebar_admin.php";
                             <th> id</th>
                             <th> email</th>
                             <th> status</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,6 +37,14 @@ require_once "../../sidebar_admin.php";
                                 </td>
                                 <td class=""><?= $opt['email']; ?></td>
                                 <td class=""><?= $opt['status']; ?></td>
+                                <td>
+                                    <a class="btn btn-default"
+                                       href="<?= admin_link('/crud/leads/form.php?id=' . $opt['id']) ?>">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                       href="<?= admin_link('/crud/leads/list.php?delete_id=' . $opt['id'] . '&name=leads') ?>">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
 
@@ -71,7 +81,8 @@ require_once "../../sidebar_admin.php";
                                     }
 
                                     foreach ($range as $number) {
-                                        echo '<li ' . (($pag['page'] == $number) ? 'class="active"' : '') . '><a href="' . create_link($number) . '">' . $number . '</a></li>';
+                                        echo '<li ' . (($pag['page'] == $number) ? 'class="active"' : '') . '>
+                                        <a href="' . create_link($number) . '">' . $number . '</a></li>';
                                     } ?>
 
                                     <?php if ($pag['page'] < $pag['number_pages']): ?>

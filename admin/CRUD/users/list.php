@@ -23,6 +23,8 @@ require_once "../../sidebar_admin.php";
                             <th> role</th>
                             <th> name</th>
                             <th> email</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,6 +37,14 @@ require_once "../../sidebar_admin.php";
                                 <td class=""><?= $opt['role']; ?></td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['email']; ?></td>
+                                <td>
+                                    <a class="btn btn-default"
+                                       href="<?= admin_link('/crud/users/form.php?id=' . $opt['id']) ?>">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                       href="<?= admin_link('/crud/users/list.php?delete_id=' . $opt['id'] . '&name=users') ?>">Delete</a>
+                                </td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -71,7 +81,8 @@ require_once "../../sidebar_admin.php";
                                         $range = array_unique(array_merge([1], $ar, [$pag['number_pages']]));
                                     }
                                     foreach ($range as $number) {
-                                        echo '<li ' . (($pag['page'] == $number) ? 'class="active"' : '') . '><a href="' . create_link($number) . '">' . $number . '</a></li>';
+                                        echo '<li ' . (($pag['page'] == $number) ? 'class="active"' : '') . '>
+                                        <a href="' . create_link($number) . '">' . $number . '</a></li>';
                                     } ?>
 
                                     <?php if ($pag['page'] < $pag['number_pages']): ?>

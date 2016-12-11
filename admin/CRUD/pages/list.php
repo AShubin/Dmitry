@@ -24,8 +24,10 @@ require_once "../../sidebar_admin.php";
                         <tr>
                             <th> id</th>
                             <th> name</th>
-                            <!--<th> content</th>-->
                             <th> slug</th>
+                            <th> status</th>
+                            <th> </th>
+                            <th> </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +40,15 @@ require_once "../../sidebar_admin.php";
                                 </td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['slug']; ?></td>
+                                <td class=""><?= $opt['status']; ?></td>
+                                <td>
+                                    <a class="btn btn-default"
+                                       href="<?= admin_link('/crud/pages/form.php?id=' . $opt['id']) ?>">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                       href="<?= admin_link('/crud/pages/list.php?delete_id=' . $opt['id'] . '&name=pages') ?>">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
 

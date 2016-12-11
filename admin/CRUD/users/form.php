@@ -1,6 +1,11 @@
 <?php
 require_once "../../functions.php";
 init();
+$id = (isset($_GET['id'])) ? $_GET['id'] : false;
+$data_set = (isset($_GET['id'])) ? get_one('users', $_GET['id']) : false;
+$options = get_rows('users');
+$name = ($data_set == false) ? '' : $data_set['name'];
+$email = ($data_set == false) ? '' : $data_set['email'];
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
 ?>
@@ -21,14 +26,16 @@ require_once "../../sidebar_admin.php";
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
                                 <?php if (isset($_SESSION["user_add_message"])) {
-                                    echo '<p class="' . (($_SESSION["user_add_message"]['type'] == 'error') ? 'error' : 'success') . '" >' . $_SESSION["user_add_message"]['message'] . '</p>';
+                                    echo '<p class="' . (($_SESSION["user_add_message"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["user_add_message"]['message'] . '</p>';
                                 }
                                 ?>
 
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Username</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="name" name="name" type="text">
+                                        <input required class="form-control" id="name" name="name" type="text"
+                                               value="<?= $name ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -49,7 +56,8 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="email" class="control-label col-lg-2">Email</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="email" name="email" type="email">
+                                        <input required class="form-control" id="email" name="email" type="email"
+                                               value="<?= $email ?>">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -61,10 +69,13 @@ require_once "../../sidebar_admin.php";
                                         </select>
                                     </div>
                                 </div>
-                                <input type="hidden" name="action" value="add-user">
+                                <input type="hidden" name="action"
+                                       value="<?= isset($_GET['id']) ? 'update-user' : 'add-user' ?>">
+                                <input type="hidden" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger" type="submit">Save</button>
+                                        <button class="btn btn-danger"
+                                                type="submit"><?= isset($_GET['id']) ? 'Update' : 'Save' ?></button>
                                         <button class="btn btn-default" type="button">Cancel</button>
                                     </div>
                                 </div>

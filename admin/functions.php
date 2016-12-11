@@ -102,8 +102,10 @@ function init()
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-product') {
         try {
-            if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status']) && isset($_POST['price']) && isset($_POST['currency'])) {
-                create_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'], $_POST['price'], $_POST['currency']);
+            if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug'])
+                && isset($_POST['status']) && isset($_POST['price']) && isset($_POST['currency'])) {
+                create_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
+                    $_POST['price'], $_POST['currency']);
             } else {
                 throw new Exception('Fill in all lines');
             }
@@ -122,24 +124,70 @@ function init()
             $_SESSION["adding_config"] = $e->getMessage();
         }
     }
+    if (isset($_POST['action']) && $_POST['action'] == 'update-lead') {
+        try {
+            if (isset ($_POST['email']) && isset ($_POST['status']) && isset($_POST['id'])) {
+                update_lead($_POST['email'], $_POST['status'], $_POST['id']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_lead"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'update-option-group') {
+        try {
+            if (isset ($_POST['name']) && isset($_POST['id'])) {
+                update_option_group($_POST['name'], $_POST['id']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_option_group"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'update-page') {
+        try {
+            if (isset ($_POST['name']) && isset($_POST['content']) && isset($_POST['slug'])
+                && isset($_POST['status']) && isset($_POST['id'])) {
+                update_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'], $_POST['id']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_page"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'update-product') {
+        try {
+            if (isset ($_POST['name']) && isset($_POST['content']) && isset($_POST['slug']) && isset($_POST['status'])
+                && isset($_POST['price']) && isset($_POST['currency']) && isset($_POST['id'])) {
+                update_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
+                    $_POST['price'], $_POST['currency'], $_POST['id']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_product"] = $e->getMessage();
+        }
+    }
+    if (isset($_POST['action']) && $_POST['action'] == 'update-user') {
+        try {
+            if (isset ($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])
+                && isset($_POST['role']) && isset($_POST['id']) && $_POST['password']==$_POST['confirm_password']) {
+                update_user($_POST['name'], $_POST['email'], $_POST['password'], $_POST['role'], $_POST['id']);
+            } else {
+                throw new Exception('Fill in all lines');
+            }
+        } catch (Exception $e) {
+            $_SESSION["adding_user"] = $e->getMessage();
+        }
+    }
     if (isset($_GET['delete_id'])) {
         delete($_GET['name'], $_GET['delete_id']);
     }
 
 }
-
-//function create_group($name, $value, $option_group_id){
-//    $conn = get_connection();
-//
-//    //add check if exist option_group_id in table
-//
-//    $insert = "INSERT INTO configs (name,value,option_group) VALUES ('$name','$value', $option_group_id)";
-//    if($conn->query($insert) === TRUE){
-//        return true;
-//    }else{
-//        throw new Exception('Error with inserting into database');
-//    }
-//}
 
 function create_admin($name, $email, $password, $confirm_password, $role)
 {
@@ -226,6 +274,61 @@ function update_config($name, $value, $opt_group, $id)
 {
     $conn = get_connection();
     $update = "UPDATE configs SET name='$name',value='$value',option_group='$opt_group' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function update_lead($email, $status, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE leads SET email='$email',status='$status' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function update_option_group($name, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE option_group SET name='$name' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function update_page($name, $content, $slug, $status, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE pages SET name='$name',content='$content',slug='$slug',status='$status' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function update_product($name, $content, $slug, $status, $price, $currency, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE products SET name='$name',content='$content',slug='$slug',status='$status',price='$price',currency='$currency' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
+function update_user ($name, $email, $password, $role, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE users SET name='$name',email='$email',password='$password',role='$role' WHERE id=$id";
     if ($conn->query($update) === TRUE) {
         return true;
     } else {
@@ -363,7 +466,7 @@ function redirect($url)
     if ($_SERVER['SCRIPT_NAME'] == '/dmitry/admin/login.php' && $url == "/dmitry/admin/login.php") {
         return;
     }
-    $url = (is_login()) ? $url : 'login.php';
+    $url = (is_login())? $url : 'login.php';
     header("Location: $url");
     exit;
 }

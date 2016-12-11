@@ -22,6 +22,8 @@ require_once "../../sidebar_admin.php";
                             <th> id</th>
                             <th> name</th>
                             <th> count</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,6 +36,14 @@ require_once "../../sidebar_admin.php";
                                 </td>
                                 <td class=""><?= $opt['name']; ?></td>
                                 <td class=""><?= $opt['count']; ?></td>
+                                <td>
+                                    <a class="btn btn-default"
+                                       href="<?= admin_link('/crud/options/form.php?id=' . $opt['id']) ?>">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                       href="<?= admin_link('/crud/options/list.php?delete_id=' . $opt['id'] . '&name=option_group') ?>">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
 

@@ -1,6 +1,12 @@
 <?php
 require_once "../../functions.php";
 init();
+$id=(isset($_GET['id'])) ? $_GET['id'] : false;
+$data_set=(isset($_GET['id'])) ? get_one('products', $_GET['id']) : false;
+$name=($data_set == false) ? '' : $data_set['name'];
+$content=($data_set == false) ? '' : $data_set['content'];
+$slug=($data_set == false) ? '' : $data_set['slug'];
+$price=($data_set == false) ? '' : $data_set['price'];
 $options = get_rows('products');
 require_once "../../header_admin.php";
 require_once "../../sidebar_admin.php";
@@ -27,19 +33,22 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name of product</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="name" name="name" type="text">
+                                        <input required class="form-control" id="name" name="name" type="text"
+                                               value="<?= $name ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <label for="content" class="control-label col-lg-2">Content</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="content" name="content" type="text">
+                                        <input required class="form-control" id="content" name="content" type="text"
+                                               value="<?= $content ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <label for="slug" class="control-label col-lg-2">Slug</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="slug" name="slug" type="text">
+                                        <input required class="form-control" id="slug" name="slug" type="text"
+                                               value="<?= $slug ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -62,7 +71,8 @@ require_once "../../sidebar_admin.php";
                                 <div class="form-group ">
                                     <label for="price" class="control-label col-lg-2">Price</label>
                                     <div class="col-lg-10">
-                                        <input required class="form-control" id="price" name="price" type="text">
+                                        <input required class="form-control" id="price" name="price" type="text"
+                                               value="<?= $price ?>">
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -82,11 +92,11 @@ require_once "../../sidebar_admin.php";
                                         </select>
                                     </div>
                                 </div>
-
-                                <input type="hidden" name="action" value="add-product">
+                                <input type="hidden" name="action" value="<?= isset($_GET['id'])? 'update-product' : 'add-product'?>">
+                                <input type="hidden" name="id" value="<?= isset($_GET['id'])? $_GET['id'] : ''?>">
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger" type="submit">Save</button>
+                                        <button class="btn btn-danger" type="submit"><?= isset($_GET['id'])? 'Update' : 'Save'?></button>
                                         <button class="btn btn-default" type="button">Cancel</button>
                                     </div>
                                 </div>
