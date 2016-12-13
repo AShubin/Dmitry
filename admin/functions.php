@@ -466,7 +466,7 @@ function redirect($url)
     if ($_SERVER['SCRIPT_NAME'] == '/dmitry/admin/login.php' && $url == "/dmitry/admin/login.php") {
         return;
     }
-    $url = (is_login())? $url : 'login.php';
+    $url = (is_login())? $url : ADMIN_URL.'/login.php';
     header("Location: $url");
     exit;
 }
