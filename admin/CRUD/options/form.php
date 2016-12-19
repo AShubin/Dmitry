@@ -18,7 +18,7 @@ require_once "../../sidebar_admin.php";
                 <section class="panel">
 
                     <header class="panel-heading">
-                        <b>Adding new option group</b>
+                        <b><?= isset($_GET['id'])? 'Update option group':'Adding new option group' ?></b>
                     </header>
                     <div class="panel-body">
                         <div class="form">

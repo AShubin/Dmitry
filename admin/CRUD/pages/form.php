@@ -22,7 +22,7 @@ require_once "../../sidebar_admin.php";
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <b>Adding new page</b>
+                        <b><?= isset($_GET['id'])?'Update page':'Adding new page' ?></b>
                     </header>
                     <div class="panel-body">
                         <div class="form">

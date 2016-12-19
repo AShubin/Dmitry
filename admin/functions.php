@@ -270,6 +270,17 @@ function create_product($name, $content, $slug, $status, $price, $currency)
     }
 }
 
+function update($name, $content, $slug, $status, $price, $currency, $id)
+{
+    $conn = get_connection();
+    $update = "UPDATE products SET name='$name',content='$content',slug='$slug',status='$status',price='$price',currency='$currency' WHERE id=$id";
+    if ($conn->query($update) === TRUE) {
+        return true;
+    } else {
+        throw new Exception('Error with inserting into database');
+    }
+}
+
 function update_config($name, $value, $opt_group, $id)
 {
     $conn = get_connection();
@@ -325,7 +336,7 @@ function update_product($name, $content, $slug, $status, $price, $currency, $id)
     }
 }
 
-function update_user ($name, $email, $password, $role, $id)
+function update_user($name, $email, $password, $role, $id)
 {
     $conn = get_connection();
     $update = "UPDATE users SET name='$name',email='$email',password='$password',role='$role' WHERE id=$id";
@@ -336,7 +347,7 @@ function update_user ($name, $email, $password, $role, $id)
     }
 }
 
-function delete ($name, $id)
+function delete($name, $id)
 {
     $conn = get_connection();
     $delete = "DELETE FROM $name WHERE id=$id";

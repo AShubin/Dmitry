@@ -19,7 +19,7 @@ require_once "../../sidebar_admin.php";
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <b>Adding new config</b>
+                        <b> <?= isset($_GET['id'])? 'Update config':'Adding new config' ?> </b>
                     </header>
                     <div class="panel-body">
                         <div class="form">

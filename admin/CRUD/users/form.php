@@ -19,7 +19,7 @@ require_once "../../sidebar_admin.php";
                 <section class="panel">
 
                     <header class="panel-heading">
-                        Adding new User
+                        <b><?= isset($_GET['id'])? 'Update the User':'Adding new User'?></b>
                     </header>
                     <div class="panel-body">
                         <div class="form">
