@@ -24,9 +24,11 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["adding_lead"])){
-                                    echo '<p>'.$_SESSION["adding_lead"].'</p>';
-                                }?>
+                                <?php if (isset($_SESSION["adding_lead"])) {
+                                    echo '<p class="' . (($_SESSION["adding_lead"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["adding_lead"]['message'] . '</p>';
+                                }
+                                ?>
 
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Email</label>
@@ -39,14 +41,6 @@ require_once "../../sidebar_admin.php";
                                     <label for="opt_group" class="control-label col-lg-2">Status</label>
                                     <div class="col-lg-10">
                                         <select name="status" id="status" class="form-control">
-
-<!--                                            --><?php
-//                                            $html = '';
-//                                            foreach($options as $option){
-//                                                $html .= "<option value='".$option['id']."'>".$option['status']."</option>";
-//                                            }
-//                                            echo $html;
-//                                            ?>
 
                                             <?php
                                             $array= get_enum('leads', 'status');

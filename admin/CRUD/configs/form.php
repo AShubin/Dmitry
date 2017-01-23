@@ -26,8 +26,10 @@ require_once "../../sidebar_admin.php";
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
                                 <?php if (isset($_SESSION["adding_config"])) {
-                                    echo '<p>' . $_SESSION["adding_config"] . '</p>';
-                                } ?>
+                                    echo '<p class="' . (($_SESSION["adding_config"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["adding_config"]['message'] . '</p>';
+                                }
+                                ?>
 
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name</label>

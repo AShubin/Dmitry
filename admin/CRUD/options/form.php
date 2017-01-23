@@ -24,9 +24,11 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["adding_option_group"])){
-                                    echo '<p>'.$_SESSION["adding_option_group"].'</p>';
-                                }?>
+                                <?php if (isset($_SESSION["adding_option_group"])) {
+                                    echo '<p class="' . (($_SESSION["adding_option_group"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["adding_option_group"]['message'] . '</p>';
+                                }
+                                ?>
 
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name</label>

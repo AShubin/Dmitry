@@ -57,36 +57,78 @@ function init()
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-option-group') {
-        try {
-            if (isset ($_POST['name'])) {
-                create_option_group($_POST['name']);
-            } else {
-                throw new Exception('Name is empty');
+        if (isset ($_POST['name'])) {
+            try {
+                $create_option_group = create_option_group($_POST['name']);
+                if ($create_option_group) {
+                    $arr = [
+                        'message' => "Option was added.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Please complete all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["adding_option_group"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["adding_option_group"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_option_group"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-config') {
-        try {
-            if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group'])) {
-                create_config($_POST['name'], $_POST['value'], $_POST['opt_group']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group'])) {
+            try {
+                $create_config = create_config($_POST['name'], $_POST['value'], $_POST['opt_group']);
+                if ($create_config) {
+                    $arr = [
+                        'message' => "Config was added.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Please complete all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["adding_config"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["adding_config"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_config"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-lead') {
-        try {
-            if (isset ($_POST['email']) && isset($_POST['status'])) {
-                create_lead($_POST['email'], $_POST['status']);
-            } else {
-                throw new Exception('Email is empty');
+        if (isset ($_POST['email']) && isset($_POST['status'])) {
+            try {
+                $create_lead = create_lead($_POST['email'], $_POST['status']);
+                if ($create_lead) {
+                    $arr = [
+                        'message' => "Lead was added.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Email is empty.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["adding_lead"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["adding_config"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_lead"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-page') {
@@ -192,8 +234,8 @@ function init()
 function create_admin($name, $email, $password, $confirm_password, $role)
 {
     if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name)
-        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password
-    ) {
+        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password)
+    {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception('Not valid email');
         }
@@ -211,7 +253,7 @@ function create_admin($name, $email, $password, $confirm_password, $role)
             throw new Exception('Error with inserting into database');
         }
     }
-    throw new Exception('Arguments not correct');
+    throw new Exception('Arguments are not correct');
 }
 
 function create_option_group($name)
