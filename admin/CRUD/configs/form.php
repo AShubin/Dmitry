@@ -25,10 +25,14 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["adding_config"])) {
+                                <?php
+                                if (isset($_SESSION["adding_config"])) {
                                     echo '<p class="' . (($_SESSION["adding_config"]['type'] == 'error') ?
-                                            'error' : 'success') . '" >' . $_SESSION["adding_config"]['message'] . '</p>';
-                                }
+                                            'error' : 'success') . '" >' . $_SESSION["adding_config"]['message'] . '</p>'; }
+
+                                if (isset($_SESSION["updating_config"])) {
+                                    echo '<p class="' . (($_SESSION["updating_config"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["updating_config"]['message'] . '</p>'; }
                                 ?>
 
                                 <div class="form-group ">

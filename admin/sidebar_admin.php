@@ -194,12 +194,12 @@
 <!--                    <li><a href="500.html">500 Error</a></li>-->
 <!--                </ul>-->
 <!--            </li>-->
-            <li>
-                <a href="<?= admin_link('/login.php') ?>">
-                    <i class="fa fa-user"></i>
-                    <span>Login Page</span>
-                </a>
-            </li>
+<!--            <li>-->
+<!--                <a href="--><?//= admin_link('/login.php') ?><!--">-->
+<!--                    <i class="fa fa-user"></i>-->
+<!--                    <span>Login Page</span>-->
+<!--                </a>-->
+<!--            </li>-->
 
             <!--multi level menu start-->
 <!--            <li class="sub-menu">-->

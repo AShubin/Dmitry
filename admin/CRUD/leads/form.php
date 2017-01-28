@@ -28,6 +28,11 @@ require_once "../../sidebar_admin.php";
                                     echo '<p class="' . (($_SESSION["adding_lead"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["adding_lead"]['message'] . '</p>';
                                 }
+
+                                if (isset($_SESSION["updating_lead"])) {
+                                    echo '<p class="' . (($_SESSION["updating_lead"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["updating_lead"]['message'] . '</p>';
+                                }
                                 ?>
 
                                 <div class="form-group ">

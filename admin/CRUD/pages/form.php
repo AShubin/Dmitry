@@ -28,9 +28,15 @@ require_once "../../sidebar_admin.php";
                         <div class="form">
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
-                                <?php if (isset($_SESSION["adding_page"])){
-                                    echo '<p>'.$_SESSION["adding_page"].'</p>';
-                                }?>
+                                <?php if (isset($_SESSION["adding_page"])) {
+                                    echo '<p class="' . (($_SESSION["adding_page"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["adding_page"]['message'] . '</p>';
+                                }
+                                if (isset($_SESSION["updating_page"])) {
+                                    echo '<p class="' . (($_SESSION["updating_page"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["updating_page"]['message'] . '</p>';
+                                }
+                                ?>
 
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name of page</label>

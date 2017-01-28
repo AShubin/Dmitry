@@ -28,6 +28,10 @@ require_once "../../sidebar_admin.php";
                                     echo '<p class="' . (($_SESSION["adding_option_group"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["adding_option_group"]['message'] . '</p>';
                                 }
+                                if (isset($_SESSION["updating_option_group"])) {
+                                    echo '<p class="' . (($_SESSION["updating_option_group"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["updating_option_group"]['message'] . '</p>';
+                                }
                                 ?>
 
                                 <div class="form-group ">

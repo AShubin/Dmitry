@@ -27,8 +27,14 @@ require_once "../../sidebar_admin.php";
                             <form class="cmxform form-horizontal tasi-form" method="post">
 
                                 <?php if (isset($_SESSION["adding_product"])) {
-                                    echo '<p>' . $_SESSION["adding_product"] . '</p>';
-                                } ?>
+                                    echo '<p class="' . (($_SESSION["adding_product"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["adding_product"]['message'] . '</p>';
+                                }
+                                if (isset($_SESSION["updating_product"])) {
+                                    echo '<p class="' . (($_SESSION["updating_product"]['type'] == 'error') ?
+                                            'error' : 'success') . '" >' . $_SESSION["updating_product"]['message'] . '</p>';
+                                }
+                                ?>
 
                                 <div class="form-group ">
                                     <label for="name" class="control-label col-lg-2">Name of product</label>

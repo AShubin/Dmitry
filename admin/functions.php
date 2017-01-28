@@ -127,108 +127,223 @@ function init()
                     'message' => $e->getMessage(),
                     'type' => 'error'
                 ];
-                $_SESSION["adding_config"] = $arr;
+                $_SESSION["adding_lead"] = $arr;
             }
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-page') {
-        try {
-            if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status'])) {
-                create_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status'])) {
+            try {
+                $create_page = create_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status']);
+                if ($create_page) {
+                    $arr = [
+                        'message' => "Page was added.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["adding_page"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["adding_page"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_page"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'add-product') {
-        try {
-            if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug'])
-                && isset($_POST['status']) && isset($_POST['price']) && isset($_POST['currency'])) {
-                create_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
+        if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug'])
+            && isset($_POST['status']) && isset($_POST['price']) && isset($_POST['currency'])
+        ) {
+            try {
+                $create_product = create_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
                     $_POST['price'], $_POST['currency']);
-            } else {
-                throw new Exception('Fill in all lines');
+                if ($create_product) {
+                    $arr = [
+                        'message' => "Product was added.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["adding_product"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["adding_product"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_product"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'update-config') {
-        try {
-            if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group']) && isset($_POST['id'])) {
-                update_config($_POST['name'], $_POST['value'], $_POST['opt_group'], $_POST['id']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group']) && isset($_POST['id'])) {
+            try {
+                $update_config = update_config($_POST['name'], $_POST['value'], $_POST['opt_group'], $_POST['id']);
+                if ($update_config) {
+                    $arr = [
+                        'message' => "The config was updated.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["updating_config"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["updating_config"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_config"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'update-lead') {
-        try {
-            if (isset ($_POST['email']) && isset ($_POST['status']) && isset($_POST['id'])) {
-                update_lead($_POST['email'], $_POST['status'], $_POST['id']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['email']) && isset ($_POST['status']) && isset($_POST['id'])) {
+            try {
+                $update_lead = update_lead($_POST['email'], $_POST['status'], $_POST['id']);
+                if ($update_lead) {
+                    $arr = [
+                        'message' => "The lead was updated.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["updating_lead"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["updating_lead"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_lead"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'update-option-group') {
-        try {
-            if (isset ($_POST['name']) && isset($_POST['id'])) {
-                update_option_group($_POST['name'], $_POST['id']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['name']) && isset($_POST['id'])) {
+            try {
+                $update_option_group = update_option_group($_POST['name'], $_POST['id']);
+                if ($update_option_group) {
+                    $arr = [
+                        'message' => "The option group was updated.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["updating_option_group"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["updating_option_group"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_option_group"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'update-page') {
-        try {
-            if (isset ($_POST['name']) && isset($_POST['content']) && isset($_POST['slug'])
-                && isset($_POST['status']) && isset($_POST['id'])) {
-                update_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'], $_POST['id']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['name']) && isset($_POST['content']) && isset($_POST['slug'])
+            && isset($_POST['status']) && isset($_POST['id'])
+        ) {
+            try {
+                $update_page = update_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'], $_POST['id']);
+                if ($update_page) {
+                    $arr = [
+                        'message' => "The page was updated.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["updating_page"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["updating_page"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_page"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'update-product') {
-        try {
-            if (isset ($_POST['name']) && isset($_POST['content']) && isset($_POST['slug']) && isset($_POST['status'])
-                && isset($_POST['price']) && isset($_POST['currency']) && isset($_POST['id'])) {
-                update_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
+        if (isset ($_POST['name']) && isset($_POST['content']) && isset($_POST['slug']) && isset($_POST['status'])
+            && isset($_POST['price']) && isset($_POST['currency']) && isset($_POST['id'])
+        ) {
+            try {
+                $update_product = update_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
                     $_POST['price'], $_POST['currency'], $_POST['id']);
-            } else {
-                throw new Exception('Fill in all lines');
+                if ($update_product) {
+                    $arr = [
+                        'message' => "The product was updated.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["updating_product"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["updating_product"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_product"] = $e->getMessage();
         }
     }
     if (isset($_POST['action']) && $_POST['action'] == 'update-user') {
-        try {
-            if (isset ($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])
-                && isset($_POST['role']) && isset($_POST['id']) && $_POST['password']==$_POST['confirm_password']) {
-                update_user($_POST['name'], $_POST['email'], $_POST['password'], $_POST['role'], $_POST['id']);
-            } else {
-                throw new Exception('Fill in all lines');
+        if (isset ($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])
+            && isset($_POST['role']) && isset($_POST['id']) && $_POST['password'] == $_POST['confirm_password']
+        ) {
+            try {
+                $update_user = update_user($_POST['name'], $_POST['email'], $_POST['password'], $_POST['role'], $_POST['id']);
+                if ($update_user) {
+                    $arr = [
+                        'message' => "The user was updated.",
+                        'type' => 'success'
+                    ];
+                } else {
+                    $arr = [
+                        'message' => 'Fill in all fields.',
+                        'type' => 'error'
+                    ];
+                }
+                $_SESSION["updating_user"] = $arr;
+            } catch (Exception $e) {
+                $arr = [
+                    'message' => $e->getMessage(),
+                    'type' => 'error'
+                ];
+                $_SESSION["updating_user"] = $arr;
             }
-        } catch (Exception $e) {
-            $_SESSION["adding_user"] = $e->getMessage();
         }
     }
     if (isset($_GET['delete_id'])) {
         delete($_GET['name'], $_GET['delete_id']);
     }
-
 }
 
 function create_admin($name, $email, $password, $confirm_password, $role)
