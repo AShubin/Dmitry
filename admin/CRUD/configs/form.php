@@ -29,10 +29,12 @@ require_once "../../sidebar_admin.php";
                                 if (isset($_SESSION["adding_config"])) {
                                     echo '<p class="' . (($_SESSION["adding_config"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["adding_config"]['message'] . '</p>'; }
+                                unset ($_SESSION["adding_config"]);
 
                                 if (isset($_SESSION["updating_config"])) {
                                     echo '<p class="' . (($_SESSION["updating_config"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["updating_config"]['message'] . '</p>'; }
+                                unset ($_SESSION["updating_config"]);
                                 ?>
 
                                 <div class="form-group ">
@@ -72,6 +74,9 @@ require_once "../../sidebar_admin.php";
                 </section>
             </div>
         </div>
+
+        <? var_dump($update) ?>
+
         <!-- page end-->
     </section>
 </section>

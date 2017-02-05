@@ -30,10 +30,13 @@ require_once "../../sidebar_admin.php";
                                     echo '<p class="' . (($_SESSION["adding_product"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["adding_product"]['message'] . '</p>';
                                 }
+                                unset ($_SESSION["adding_product"]);
+
                                 if (isset($_SESSION["updating_product"])) {
                                     echo '<p class="' . (($_SESSION["updating_product"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["updating_product"]['message'] . '</p>';
                                 }
+                                unset ($_SESSION["updating_product"]);
                                 ?>
 
                                 <div class="form-group ">

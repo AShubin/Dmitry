@@ -187,7 +187,11 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'update-config') {
         if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group']) && isset($_POST['id'])) {
             try {
-                $update_config = update_config($_POST['name'], $_POST['value'], $_POST['opt_group'], $_POST['id']);
+                $update_config=update('configs',array('name',$_POST['name'],'value',$_POST['value'],'option_group',$_POST['opt_group']),$_POST['id']);
+
+//                $update_config = update_config($_POST['name'], $_POST['value'], $_POST['opt_group'], $_POST['id']);
+
+
                 if ($update_config) {
                     $arr = [
                         'message' => "The config was updated.",
@@ -427,10 +431,15 @@ function create_product($name, $content, $slug, $status, $price, $currency)
     }
 }
 
-function update($name, $content, $slug, $status, $price, $currency, $id)
+
+function update($table, $values, $id)
 {
+    $valueStrings = array();
+    foreach ($values as $name => $value) {
+        $valueStrings[] = $name ."='" . $value ."'";
+    }
     $conn = get_connection();
-    $update = "UPDATE products SET name='$name',content='$content',slug='$slug',status='$status',price='$price',currency='$currency' WHERE id=$id";
+    $update = "UPDATE $table SET implode(',', $valueStrings) WHERE id=$id";
     if ($conn->query($update) === TRUE) {
         return true;
     } else {
@@ -438,16 +447,17 @@ function update($name, $content, $slug, $status, $price, $currency, $id)
     }
 }
 
-function update_config($name, $value, $opt_group, $id)
-{
-    $conn = get_connection();
-    $update = "UPDATE configs SET name='$name',value='$value',option_group='$opt_group' WHERE id=$id";
-    if ($conn->query($update) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
+
+//function update_config($name,$value,$opt_group,$id)
+//{
+//    $conn = get_connection();
+//    $update = "UPDATE configs SET name='$name',value='$value',option_group='$opt_group' WHERE id=$id";
+//    if ($conn->query($update) === TRUE) {
+//        return true;
+//    } else {
+//        throw new Exception('Error with inserting into database');
+//    }
+//}
 
 function update_lead($email, $status, $id)
 {

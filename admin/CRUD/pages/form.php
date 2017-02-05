@@ -32,10 +32,13 @@ require_once "../../sidebar_admin.php";
                                     echo '<p class="' . (($_SESSION["adding_page"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["adding_page"]['message'] . '</p>';
                                 }
+                                unset ($_SESSION["adding_page"]);
+
                                 if (isset($_SESSION["updating_page"])) {
                                     echo '<p class="' . (($_SESSION["updating_page"]['type'] == 'error') ?
                                             'error' : 'success') . '" >' . $_SESSION["updating_page"]['message'] . '</p>';
                                 }
+                                unset ($_SESSION["updating_page"]);
                                 ?>
 
                                 <div class="form-group ">
