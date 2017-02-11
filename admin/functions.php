@@ -59,7 +59,7 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'add-option-group') {
         if (isset ($_POST['name'])) {
             try {
-                $create_option_group = create_option_group($_POST['name']);
+                $create_option_group = create('option_group', array('name' => $_POST['name'], 'count' => 0));
                 if ($create_option_group) {
                     $arr = [
                         'message' => "Option was added.",
@@ -84,7 +84,8 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'add-config') {
         if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group'])) {
             try {
-                $create_config = create_config($_POST['name'], $_POST['value'], $_POST['opt_group']);
+                $create_config = create('configs', array('name' => $_POST['name'], 'value' => $_POST['value'],
+                    'option_group' => $_POST['opt_group']));
                 if ($create_config) {
                     $arr = [
                         'message' => "Config was added.",
@@ -109,7 +110,7 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'add-lead') {
         if (isset ($_POST['email']) && isset($_POST['status'])) {
             try {
-                $create_lead = create_lead($_POST['email'], $_POST['status']);
+                $create_lead = create('leads', array('email' => $_POST['email'], 'status' => $_POST['status']));
                 if ($create_lead) {
                     $arr = [
                         'message' => "Lead was added.",
@@ -134,7 +135,8 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'add-page') {
         if (isset ($_POST['name']) && isset ($_POST['content']) && isset ($_POST['slug']) && isset($_POST['status'])) {
             try {
-                $create_page = create_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status']);
+                $create_page = create('pages', array('name' => $_POST['name'], 'content' => $_POST['content'],
+                    'slug' => $_POST['slug'], 'status' => $_POST['status']));
                 if ($create_page) {
                     $arr = [
                         'message' => "Page was added.",
@@ -161,8 +163,9 @@ function init()
             && isset($_POST['status']) && isset($_POST['price']) && isset($_POST['currency'])
         ) {
             try {
-                $create_product = create_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
-                    $_POST['price'], $_POST['currency']);
+                $create_product = create('products', array('name' => $_POST['name'], 'content' => $_POST['content'],
+                    'slug' => $_POST['slug'], 'status' => $_POST['status'], 'price' => $_POST['price'],
+                    'currency' => $_POST['currency']));
                 if ($create_product) {
                     $arr = [
                         'message' => "Product was added.",
@@ -187,7 +190,8 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'update-config') {
         if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group']) && isset($_POST['id'])) {
             try {
-                $update_config = update('configs', array('name' => $_POST['name'], 'value' => $_POST['value'], 'option_group' => $_POST['opt_group']), $_POST['id']);
+                $update_config = update('configs', array('name' => $_POST['name'], 'value' => $_POST['value'],
+                    'option_group' => $_POST['opt_group']), $_POST['id']);
                 if ($update_config) {
                     $arr = [
                         'message' => "The config was updated.",
@@ -374,60 +378,21 @@ function create_admin($name, $email, $password, $confirm_password, $role)
     throw new Exception('Arguments are not correct');
 }
 
-function create_option_group($name)
+function create($table, $values)
 {
+    $valueStrings = array();
+    foreach ($values as $name => $value) {
+        $valueStrings[] = $name . "='$value'";
+    }
     $conn = get_connection();
-    $insert = "INSERT INTO option_group (name,count) VALUES ('$name',0 )";
+    $valueStrings = implode(',', $valueStrings);
+    $insert = "INSERT INTO $table SET $valueStrings";
     if ($conn->query($insert) === TRUE) {
         return true;
     } else {
         throw new Exception('Error with inserting into database');
     }
-}
 
-function create_config($name, $value, $opt_group)
-{
-    $conn = get_connection();
-    $insert = "INSERT INTO configs (name, value, option_group) VALUES ('$name', '$value', '$opt_group')";
-    if ($conn->query($insert) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function create_lead($email, $status)
-{
-    $conn = get_connection();
-    $insert = "INSERT INTO leads (email, status) VALUES ('$email', '$status')";
-    if ($conn->query($insert) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function create_page($name, $content, $slug, $status)
-{
-    $conn = get_connection();
-    $insert = "INSERT INTO pages (name, content, slug, status) VALUES ('$name','$content','$slug','$status')";
-    if ($conn->query($insert) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function create_product($name, $content, $slug, $status, $price, $currency)
-{
-    $conn = get_connection();
-    $insert = "INSERT INTO products (name, content, slug, status,price,currency) 
-                VALUES ('$name','$content','$slug','$status','$price','$currency')";
-    if ($conn->query($insert) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
 }
 
 function update($table, $values, $id)
@@ -442,7 +407,7 @@ function update($table, $values, $id)
     if ($conn->query($update) === TRUE) {
         return true;
     } else {
-        throw new Exception('Error with inserting into database');
+        throw new Exception('Error with updating database');
     }
 }
 
@@ -453,7 +418,7 @@ function delete($name, $id)
     if ($conn->query($delete) === TRUE) {
         return true;
     } else {
-        throw new Exception('Error with inserting into database');
+        throw new Exception('Error with deleting database');
     }
 }
 
