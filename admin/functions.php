@@ -187,11 +187,7 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'update-config') {
         if (isset ($_POST['name']) && isset ($_POST['value']) && isset ($_POST['opt_group']) && isset($_POST['id'])) {
             try {
-                $update_config=update('configs',array('name',$_POST['name'],'value',$_POST['value'],'option_group',$_POST['opt_group']),$_POST['id']);
-
-//                $update_config = update_config($_POST['name'], $_POST['value'], $_POST['opt_group'], $_POST['id']);
-
-
+                $update_config = update('configs', array('name' => $_POST['name'], 'value' => $_POST['value'], 'option_group' => $_POST['opt_group']), $_POST['id']);
                 if ($update_config) {
                     $arr = [
                         'message' => "The config was updated.",
@@ -216,7 +212,7 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'update-lead') {
         if (isset ($_POST['email']) && isset ($_POST['status']) && isset($_POST['id'])) {
             try {
-                $update_lead = update_lead($_POST['email'], $_POST['status'], $_POST['id']);
+                $update_lead = update('leads', array('email' => $_POST['email'], 'status' => $_POST['status']), $_POST['id']);
                 if ($update_lead) {
                     $arr = [
                         'message' => "The lead was updated.",
@@ -241,10 +237,10 @@ function init()
     if (isset($_POST['action']) && $_POST['action'] == 'update-option-group') {
         if (isset ($_POST['name']) && isset($_POST['id'])) {
             try {
-                $update_option_group = update_option_group($_POST['name'], $_POST['id']);
+                $update_option_group = update('option_group', array('name' => $_POST['name']), $_POST['id']);
                 if ($update_option_group) {
                     $arr = [
-                        'message' => "The option group was updated.",
+                        'message' => "The option was updated.",
                         'type' => 'success'
                     ];
                 } else {
@@ -268,7 +264,8 @@ function init()
             && isset($_POST['status']) && isset($_POST['id'])
         ) {
             try {
-                $update_page = update_page($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'], $_POST['id']);
+                $update_page = update('pages', array('name' => $_POST['name'], 'content' => $_POST['content'],
+                    'slug' => $_POST['slug'], 'status' => $_POST['status']), $_POST['id']);
                 if ($update_page) {
                     $arr = [
                         'message' => "The page was updated.",
@@ -295,8 +292,9 @@ function init()
             && isset($_POST['price']) && isset($_POST['currency']) && isset($_POST['id'])
         ) {
             try {
-                $update_product = update_product($_POST['name'], $_POST['content'], $_POST['slug'], $_POST['status'],
-                    $_POST['price'], $_POST['currency'], $_POST['id']);
+                $update_product = update('products', array('name' => $_POST['name'], 'content' => $_POST['content'],
+                    'slug' => $_POST['slug'], 'status' => $_POST['status'], 'price' => $_POST['price'],
+                    'currency' => $_POST['currency']), $_POST['id']);
                 if ($update_product) {
                     $arr = [
                         'message' => "The product was updated.",
@@ -323,7 +321,8 @@ function init()
             && isset($_POST['role']) && isset($_POST['id']) && $_POST['password'] == $_POST['confirm_password']
         ) {
             try {
-                $update_user = update_user($_POST['name'], $_POST['email'], $_POST['password'], $_POST['role'], $_POST['id']);
+                $update_user = update('users', array('name' => $_POST['name'], 'email' => $_POST['email'],
+                    'password' => $_POST['password'], 'role' => $_POST['role']), $_POST['id']);
                 if ($update_user) {
                     $arr = [
                         'message' => "The user was updated.",
@@ -353,8 +352,8 @@ function init()
 function create_admin($name, $email, $password, $confirm_password, $role)
 {
     if (isset($name) && isset($email) && isset($password) && isset($confirm_password) && isset($role) && !empty($name)
-        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password)
-    {
+        && !empty($email) && !empty($password) && !empty($role) && $password == $confirm_password
+    ) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception('Not valid email');
         }
@@ -378,7 +377,6 @@ function create_admin($name, $email, $password, $confirm_password, $role)
 function create_option_group($name)
 {
     $conn = get_connection();
-
     $insert = "INSERT INTO option_group (name,count) VALUES ('$name',0 )";
     if ($conn->query($insert) === TRUE) {
         return true;
@@ -423,7 +421,8 @@ function create_page($name, $content, $slug, $status)
 function create_product($name, $content, $slug, $status, $price, $currency)
 {
     $conn = get_connection();
-    $insert = "INSERT INTO products (name, content, slug, status,price,currency) VALUES ('$name','$content','$slug','$status','$price','$currency')";
+    $insert = "INSERT INTO products (name, content, slug, status,price,currency) 
+                VALUES ('$name','$content','$slug','$status','$price','$currency')";
     if ($conn->query($insert) === TRUE) {
         return true;
     } else {
@@ -431,82 +430,15 @@ function create_product($name, $content, $slug, $status, $price, $currency)
     }
 }
 
-
 function update($table, $values, $id)
 {
     $valueStrings = array();
     foreach ($values as $name => $value) {
-        $valueStrings[] = $name ."='" . $value ."'";
+        $valueStrings[] = $name . "='$value'";
     }
     $conn = get_connection();
-    $update = "UPDATE $table SET implode(',', $valueStrings) WHERE id=$id";
-    if ($conn->query($update) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-
-//function update_config($name,$value,$opt_group,$id)
-//{
-//    $conn = get_connection();
-//    $update = "UPDATE configs SET name='$name',value='$value',option_group='$opt_group' WHERE id=$id";
-//    if ($conn->query($update) === TRUE) {
-//        return true;
-//    } else {
-//        throw new Exception('Error with inserting into database');
-//    }
-//}
-
-function update_lead($email, $status, $id)
-{
-    $conn = get_connection();
-    $update = "UPDATE leads SET email='$email',status='$status' WHERE id=$id";
-    if ($conn->query($update) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function update_option_group($name, $id)
-{
-    $conn = get_connection();
-    $update = "UPDATE option_group SET name='$name' WHERE id=$id";
-    if ($conn->query($update) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function update_page($name, $content, $slug, $status, $id)
-{
-    $conn = get_connection();
-    $update = "UPDATE pages SET name='$name',content='$content',slug='$slug',status='$status' WHERE id=$id";
-    if ($conn->query($update) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function update_product($name, $content, $slug, $status, $price, $currency, $id)
-{
-    $conn = get_connection();
-    $update = "UPDATE products SET name='$name',content='$content',slug='$slug',status='$status',price='$price',currency='$currency' WHERE id=$id";
-    if ($conn->query($update) === TRUE) {
-        return true;
-    } else {
-        throw new Exception('Error with inserting into database');
-    }
-}
-
-function update_user($name, $email, $password, $role, $id)
-{
-    $conn = get_connection();
-    $update = "UPDATE users SET name='$name',email='$email',password='$password',role='$role' WHERE id=$id";
+    $valueStrings = implode(',', $valueStrings);
+    $update = "UPDATE $table SET $valueStrings WHERE id=$id";
     if ($conn->query($update) === TRUE) {
         return true;
     } else {
@@ -547,8 +479,6 @@ function get_rows($name, $page = 1, $per_page = 20)
     return $res;
 }
 
-//SHOW COLUMNS FROM `products` LIKE 'currency'
-
 function get_enum($table_name, $column_name)
 {
     $enum = false;
@@ -574,8 +504,6 @@ function get_pagination($name)
         $conn = get_connection();
         $sql = "SELECT count(*) as 'total' FROM $name";
         $result = $conn->query($sql);
-        // $name.'_page'
-        // $name.'_per_page'
         $res['total'] = $result->fetch_assoc()['total'];
         $page = $_SESSION[$name . '_page'];
         $per_page = $_SESSION[$name . '_per_page'];
@@ -585,8 +513,6 @@ function get_pagination($name)
         $max = $page * $per_page;
         $res['max_number'] = ($max < $res['total']) ? $max : $res['total'];
         $res['number_pages'] = ceil($res['total'] / $per_page);
-        /* $item = $result->fetch_row();
-         $res['total'] = $item[0];*/
     }
     return $res;
 }
@@ -619,7 +545,6 @@ function admin_link($page)
     return ADMIN_URL . $page;
 }
 
-//create session
 function login($login, $pass)
 {
     if (isset($login) && isset($pass)) {
@@ -632,24 +557,21 @@ function login($login, $pass)
     return false;
 }
 
-//check if user is logged in
 function is_login()
 {
     return (isset ($_SESSION ['admin']) && !empty($_SESSION ['admin'])) ? true : false;
 }
 
-//redirect to login
 function redirect($url)
 {
     if ($_SERVER['SCRIPT_NAME'] == '/dmitry/admin/login.php' && $url == "/dmitry/admin/login.php") {
         return;
     }
-    $url = (is_login())? $url : ADMIN_URL.'/login.php';
+    $url = (is_login()) ? $url : ADMIN_URL . '/login.php';
     header("Location: $url");
     exit;
 }
 
-//logout user
 function logout()
 {
     if ($_SESSION ['admin']) {
@@ -673,7 +595,7 @@ function auth()
     }
 }
 
-function get_connection() // Create connection
+function get_connection()
 {
     global $config;
     $host = $config['db']['host'];

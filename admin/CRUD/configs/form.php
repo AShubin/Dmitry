@@ -74,9 +74,6 @@ require_once "../../sidebar_admin.php";
                 </section>
             </div>
         </div>
-
-        <? var_dump($update) ?>
-
         <!-- page end-->
     </section>
 </section>
